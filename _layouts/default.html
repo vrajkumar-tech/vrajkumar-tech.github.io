@@ -1,17 +1,15 @@
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
-    <!-- Google Ads -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7927442030711768" crossorigin="anonymous"></script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CLY6CQ5DNK"></script>
+     <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K3VPQ3ZYD4"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'G-CLY6CQ5DNK');
-    </script>
 
+        gtag('config', 'G-K3VPQ3ZYD4');
+    </script>
     <script type="application/ld+json">
         {
             "@context": "https://schema.org",
@@ -29,20 +27,14 @@
             }
         }
     </script>
-
      <meta name="author" content="Rajkumar V (rkoots)">
-
     {% seo %}
-
     <!-- Keywords Imports -->
-
     {% assign static_keywords = site.data.keywords.static_keywords %}
     {% assign combined_keywords = page.keywords | concat: static_keywords %}
-
     {% if combined_keywords %}
     <meta name="keywords" content="{{ combined_keywords | join: ', ' }}">
     {% endif %}
-
     <!-- SEO & Structured Data -->
     <link rel="alternate" type="application/atom+xml" title="rkoots Feed" href="/feed.xml">
     <script type="application/ld+json">
@@ -58,7 +50,6 @@
             }
         }
     </script>
-
     <!-- Styles & Theme -->
     <link rel="stylesheet" href="/assets/css/main.css">
     <link rel="stylesheet" href="/assets/css/academicons.css">
@@ -68,35 +59,19 @@
     <link rel="icon" type="image/png" href="/blog/images/favicon-192x192.png" sizes="192x192">
     <link rel="manifest" href="/blog/images/manifest.json">
     <meta name="theme-color" content="#ffffff">
-
     <!-- Chatbot -->
     <script src="https://app.livechatai.com/embed.js" data-id="cmab1hc9r0003ky0crgu3deor" async defer></script>
-
     <!-- MathJax Support -->
     <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
     <!-- Misc -->
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
     <meta http-equiv="cleartype" content="on">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="{{ 'blog/images/favicon.png' | relative_url }}">
-    <link rel="manifest" href="{{ 'blog/images/manifest.json' | relative_url }}">
-
-    <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ 'feed.xml' | relative_url }}">
-
-    <!-- Clarity tracking code for https://rkoots.github.io/ -->
-    <script type="text/javascript">
-        (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "rkbswm8a4o");
-    </script>
-
+    <link rel="icon" type="image/svg+xml" href="{{ '/assets/img/favicon.png' | relative_url }}">
+    <link rel="manifest" href="{{ '/assets/img/manifest.json' | relative_url }}">
 </head>
 
 <body>
@@ -107,15 +82,15 @@
             <nav id="site-nav" class="greedy-nav">
                 <button><div class="navicon"></div></button>
                 <ul class="visible-links">
-                    <li class="masthead__menu-item masthead__menu-item--lg persist"><a href="{{ '/' | relative_url }}">Your Gateway to Tech Mastery</a></li>
-                    <li class="masthead__menu-item"><a href="{{ '/technews/' | relative_url }}">Tech News</a></li>
-                    <li class="masthead__menu-item"><a href="{{ '/tools/' | relative_url }}">Tools & Resources</a></li>
-                    <li class="masthead__menu-item"><a href="{{ '/insights/' | relative_url }}">Insights</a></li>
-                    <li class="masthead__menu-item"><a href="{{ '/blog/' | relative_url }}">Tech Blog</a></li>
-                    <li class="masthead__menu-item"><a href="{{ '/guide/' | relative_url }}">Tech Guide</a></li>
-                    <li class="masthead__menu-item"><a href="{{ '/styleguide/' | relative_url }}">Style Guide</a></li>
-                    <li class="masthead__menu-item"><a href="{{ '/quickref/' | relative_url }}">AI Cheat</a></li>
-                    <li class="masthead__menu-item"><a href="{{ '/resume/' | relative_url }}">CV / About Me</a></li>
+                    <li class="masthead__menu-item masthead__menu-item--lg persist"><a href="{{ 'https://rkoots.github.io/' | relative_url }}">Your Gateway to Tech Mastery</a></li>
+                    <li class="masthead__menu-item"><a href="https://rkoots.github.io/technews/">Tech News</a></li>
+                    <li class="masthead__menu-item"><a href="https://rkoots.github.io/tools/">Tools & Resources</a></li>
+                    <li class="masthead__menu-item"><a href="https://rkoots.github.io/insights/">Insights</a></li>
+                    <li class="masthead__menu-item"><a href="https://rkoots.github.io/blog/">Tech Blog</a></li>
+                    <li class="masthead__menu-item"><a href="https://rkoots.github.io/guide/">Tech Guide</a></li>
+                    <li class="masthead__menu-item"><a href="https://rkoots.github.io/styleguide/">Style Guide</a></li>
+                    <li class="masthead__menu-item"><a href="https://rkoots.github.io/quickref/">AI Cheat</a></li>
+                    <li class="masthead__menu-item"><a href="https://rkoots.github.io/resume/">CV / About Me</a></li>
 
                     <li id="theme-toggle" class="masthead__menu-item persist tail">
                         <a><i id="theme-icon" class="fa-solid fa-sun" aria-hidden="true" title="toggle theme"></i></a>
@@ -154,18 +129,15 @@
       document.getElementById("facebook-share").href = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
     });
 </script>
-
-
 <div class="page__footer text-center">
-
     <footer>
         <nav class="footer-nav">
-            <a href="/about/">About</a>&nbsp;&nbsp;&nbsp;|&nbsp;
+            <a href="https://rkoots.github.io/about/">About</a>&nbsp;&nbsp;&nbsp;|&nbsp;
             <a href="/cv/#contact">Contact</a>&nbsp;&nbsp;&nbsp;|&nbsp;
-            <a href="/sitemap/">Sitemap</a>&nbsp;&nbsp;&nbsp;|&nbsp;
-            <a href="/projects/">Projects</a>&nbsp;&nbsp;&nbsp;|&nbsp;
-            <a href="/cv/">Portfolio</a>&nbsp;&nbsp;&nbsp;|&nbsp;
-            <a href="/terms/">Terms & Privacy Policy</a>&nbsp;&nbsp;&nbsp;|&nbsp;
+            <a href="https://rkoots.github.io/sitemap/">Sitemap</a>&nbsp;&nbsp;&nbsp;|&nbsp;
+            <a href="https://rkoots.github.io/projects/">Projects</a>&nbsp;&nbsp;&nbsp;|&nbsp;
+            <a href="/">Portfolio</a>&nbsp;&nbsp;&nbsp;|&nbsp;
+            <a href="https://rkoots.github.io/terms/">Terms & Privacy Policy</a>&nbsp;&nbsp;&nbsp;|&nbsp;
             <a href="/cv/#">About Me</a>
         </nav>
         <div class="page__footer-follow">
@@ -178,7 +150,6 @@
                 <li><a href="https://dev.to/rkoots"><i class="fa fa-fw fa-dev"></i> Dev.to</a></li>
                 <li><a href="http://rajkumarv.125mb.com"><i class="fa fa-fw fa-globe"></i> Web</a></li>
                 <li><a href="http://rajkumar.is-a.dev"><i class="fa fa-fw fa-pagelines"></i> is-a.dev</a></li>
-
             </ul>
         </div>
         <div class="page__footer-copyright">
@@ -189,7 +160,6 @@
         </div>
     </footer>
 </div>
-
 <!-- Scripts -->
 <script src="/assets/js/main.min.js"></script>
 <script>
