@@ -30,10 +30,8 @@
      <meta name="author" content="Rajkumar V (rkoots)">
     {% seo %}
     <!-- Keywords Imports -->
-    {% assign static_keywords = site.data.keywords.static_keywords %}
-    {% assign combined_keywords = page.keywords | concat: static_keywords %}
-    {% if combined_keywords %}
-    <meta name="keywords" content="{{ combined_keywords | join: ', ' }}">
+    {% if page.keywords %}
+    <meta name="keywords" content="{{ page.keywords | join: ', ' }}">
     {% endif %}
     <!-- SEO & Structured Data -->
     <link rel="alternate" type="application/atom+xml" title="rkoots Feed" href="/feed.xml">
