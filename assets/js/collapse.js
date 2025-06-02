@@ -1,0 +1,1 @@
+$(".header").click(function(){($content=($header=$(this)).next()).slideToggle(500,function(){$header.text(function(){return $content.is(":visible")?"Collapse":"Expand"})})});
