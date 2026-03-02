@@ -1,39 +1,45 @@
 // ============================================================
-// Portfolio – Rajkumar Venkataraman
+// Portfolio — Rajkumar Venkataraman
+// Director of Product Engineering | rkoots.github.io
 // ============================================================
 
-// ── DOM references ──────────────────────────────────────────
-const navbar      = document.getElementById('navbar');
-const navToggle   = document.getElementById('nav-toggle');
-const navMenu     = document.getElementById('nav-menu');
-const themeToggle = document.getElementById('theme-toggle');
+'use strict';
+
+// ── DOM References ───────────────────────────────────────────
+const navbar       = document.getElementById('navbar');
+const navToggle    = document.getElementById('nav-toggle');
+const navMenu      = document.getElementById('nav-menu');
+const themeToggle  = document.getElementById('theme-toggle');
 const scrollTopBtn = document.getElementById('scroll-top');
-const navLinks    = document.querySelectorAll('.nav__link');
-const contactForm = document.getElementById('contact-form');
+const progressFill = document.getElementById('progress-fill');
+const navLinks     = document.querySelectorAll('.nav__link');
+const contactForm  = document.getElementById('contact-form');
 
 // ── Utilities ────────────────────────────────────────────────
 function debounce(fn, wait) {
-    let timer;
-    return function (...args) {
-        clearTimeout(timer);
-        timer = setTimeout(() => fn.apply(this, args), wait);
-    };
+    let t;
+    return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), wait); };
 }
 
 function throttle(fn, limit) {
     let active = false;
-    return function (...args) {
+    return (...args) => {
         if (!active) {
-            fn.apply(this, args);
+            fn(...args);
             active = true;
             setTimeout(() => { active = false; }, limit);
         }
     };
 }
 
+// Easing function for counter animation
+function easeOutExpo(t) {
+    return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+}
+
 // ── Theme ────────────────────────────────────────────────────
 function initTheme() {
-    const saved  = localStorage.getItem('theme');
+    const saved   = localStorage.getItem('theme');
     const prefers = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     applyTheme(saved || prefers);
 }
@@ -48,11 +54,20 @@ function toggleTheme() {
     applyTheme(current === 'dark' ? 'light' : 'dark');
 }
 
+// ── Reading Progress Bar ─────────────────────────────────────
+function updateProgressBar() {
+    if (!progressFill) return;
+    const scrollTop  = window.scrollY;
+    const docHeight  = document.documentElement.scrollHeight - window.innerHeight;
+    const progress   = docHeight > 0 ? scrollTop / docHeight : 0;
+    progressFill.style.transform = `scaleX(${Math.min(progress, 1)})`;
+}
+
 // ── Navigation ───────────────────────────────────────────────
 function toggleMobileMenu() {
     const isOpen = navMenu.classList.toggle('active');
     navToggle.classList.toggle('active', isOpen);
-    navToggle.setAttribute('aria-expanded', isOpen);
+    navToggle.setAttribute('aria-expanded', String(isOpen));
     document.body.style.overflow = isOpen ? 'hidden' : '';
 }
 
@@ -70,7 +85,8 @@ function handleNavbarScroll() {
 function smoothScrollTo(targetId) {
     const target = document.querySelector(targetId);
     if (!target) return;
-    const offset = target.offsetTop - parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height'), 10) - 8;
+    const navH   = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--h-nav'), 10) || 68;
+    const offset = target.getBoundingClientRect().top + window.scrollY - navH - 8;
     window.scrollTo({ top: offset, behavior: 'smooth' });
 }
 
@@ -82,31 +98,73 @@ function onNavLinkClick(e) {
     closeMobileMenu();
 }
 
-// ── Active nav link ──────────────────────────────────────────
+// ── Active Section Tracking ──────────────────────────────────
 function updateActiveLink() {
     const sections = document.querySelectorAll('section[id]');
     const scrollY  = window.pageYOffset;
 
     sections.forEach(section => {
-        const top    = section.offsetTop - 100;
+        const top    = section.offsetTop - 120;
         const bottom = top + section.offsetHeight;
         const link   = document.querySelector(`.nav__link[href="#${section.id}"]`);
-        if (link) {
-            link.classList.toggle('active', scrollY >= top && scrollY < bottom);
-        }
+        if (link) link.classList.toggle('active', scrollY >= top && scrollY < bottom);
     });
 }
 
-// ── Scroll to top ────────────────────────────────────────────
+// ── Scroll to Top ────────────────────────────────────────────
 function toggleScrollTopBtn() {
-    scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
+    if (scrollTopBtn) scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
 }
 
-// ── Scroll-reveal (IntersectionObserver) ─────────────────────
+// ── Counter Animation ────────────────────────────────────────
+function animateCounter(el) {
+    const target   = parseInt(el.dataset.count, 10);
+    const suffix   = el.dataset.suffix || '';
+    const duration = 1200;
+    const start    = performance.now();
+
+    function update(now) {
+        const elapsed  = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased    = easeOutExpo(progress);
+        const current  = Math.round(eased * target);
+        el.textContent = current + suffix;
+        if (progress < 1) requestAnimationFrame(update);
+    }
+
+    requestAnimationFrame(update);
+}
+
+function initCounters() {
+    const counters = document.querySelectorAll('[data-count]');
+    if (!counters.length) return;
+
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounter(entry.target);
+                io.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.6 });
+
+    counters.forEach(el => io.observe(el));
+}
+
+// ── Scroll Reveal (IntersectionObserver) ─────────────────────
 function initReveal() {
-    const targets = document.querySelectorAll(
-        '.stat-card, .highlight-card, .timeline__item, .capability-card, .cert-card, .blog-card, .section__header, .about__narrative, .education'
-    );
+    const targets = document.querySelectorAll([
+        '.stat-card',
+        '.highlight-card',
+        '.timeline__item',
+        '.timeline__company-logo',
+        '.capability-card',
+        '.cert-card',
+        '.blog-card',
+        '.section__header',
+        '.about__narrative',
+        '.education'
+    ].join(', '));
 
     const io = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -115,28 +173,31 @@ function initReveal() {
                 io.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.08, rootMargin: '0px 0px -48px 0px' });
 
     targets.forEach(el => {
-        if (!el.classList.contains('reveal')) {
-            el.classList.add('reveal');
-        }
+        if (!el.classList.contains('reveal')) el.classList.add('reveal');
         io.observe(el);
     });
 }
 
-// ── Staggered reveal for grids ───────────────────────────────
+// ── Stagger Reveal for Grid Containers ───────────────────────
 function initStaggeredReveal() {
-    const grids = document.querySelectorAll('.hero__stats, .capability-grid, .cert-grid, .blog-grid, .about__highlights');
+    const grids = document.querySelectorAll([
+        '.hero__stats',
+        '.capability-grid',
+        '.cert-grid',
+        '.blog-grid',
+        '.about__highlights'
+    ].join(', '));
 
     const io = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                const children = entry.target.children;
-                Array.from(children).forEach((child, i) => {
+                Array.from(entry.target.children).forEach((child, i) => {
                     setTimeout(() => {
                         child.classList.add('reveal', 'visible');
-                    }, i * 80);
+                    }, i * 90);
                 });
                 io.unobserve(entry.target);
             }
@@ -144,7 +205,9 @@ function initStaggeredReveal() {
     }, { threshold: 0.05 });
 
     grids.forEach(grid => {
-        Array.from(grid.children).forEach(child => child.classList.add('reveal'));
+        Array.from(grid.children).forEach(child => {
+            if (!child.classList.contains('reveal')) child.classList.add('reveal');
+        });
         io.observe(grid);
     });
 }
@@ -156,59 +219,86 @@ function initContactForm() {
     contactForm.addEventListener('submit', function (e) {
         e.preventDefault();
 
-        const data = {
-            name:    contactForm.elements['name'].value.trim(),
-            email:   contactForm.elements['email'].value.trim(),
-            subject: contactForm.elements['subject'].value,
-            message: contactForm.elements['message'].value.trim()
-        };
+        const name    = contactForm.elements['name'].value.trim();
+        const email   = contactForm.elements['email'].value.trim();
+        const subject = contactForm.elements['subject'].value;
+        const message = contactForm.elements['message'].value.trim();
 
-        if (!data.name || !data.email || !data.message) {
+        if (!name || !email || !message) {
             showFormFeedback('Please fill in all required fields.', 'error');
             return;
         }
 
-        if (!isValidEmail(data.email)) {
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
             showFormFeedback('Please enter a valid email address.', 'error');
             return;
         }
 
-        const mailto = `mailto:rajkumarv88@outlook.com?subject=${encodeURIComponent(data.subject || 'Portfolio Inquiry')} — ${encodeURIComponent(data.name)}&body=${encodeURIComponent(`Name: ${data.name}\nEmail: ${data.email}\n\n${data.message}`)}`;
-        window.location.href = mailto;
+        const subjectLine = subject
+            ? `${subject} — ${name}`
+            : `Portfolio Inquiry — ${name}`;
+
+        const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
+        window.location.href = `mailto:rajkumarv88@outlook.com?subject=${encodeURIComponent(subjectLine)}&body=${encodeURIComponent(body)}`;
 
         showFormFeedback('Opening your email client…', 'success');
         contactForm.reset();
     });
 }
 
-function isValidEmail(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
 function showFormFeedback(message, type) {
-    const existing = document.querySelector('.form-feedback');
+    const existing = contactForm.querySelector('.form-feedback');
     if (existing) existing.remove();
 
-    const el = document.createElement('p');
-    el.className = 'form-feedback';
+    const el       = document.createElement('p');
+    el.className   = 'form-feedback';
     el.textContent = message;
-    el.style.cssText = `
-        margin-top: 0.75rem;
-        font-size: 0.875rem;
-        font-weight: 500;
-        color: ${type === 'success' ? 'var(--color-emerald)' : '#EF4444'};
-    `;
+    el.style.cssText = [
+        'margin-top:0.75rem',
+        'font-size:0.875rem',
+        'font-weight:500',
+        `color:${type === 'success' ? 'var(--clr-emerald)' : '#EF4444'}`
+    ].join(';');
+
     contactForm.appendChild(el);
     setTimeout(() => el.remove(), 5000);
 }
 
-// ── Footer year ──────────────────────────────────────────────
+// ── Footer Year ──────────────────────────────────────────────
 function setFooterYear() {
     const el = document.getElementById('current-year');
     if (el) el.textContent = new Date().getFullYear();
 }
 
-// ── Event listeners ──────────────────────────────────────────
+// ── Hero Entrance Sequence ───────────────────────────────────
+function initHeroEntrance() {
+    const targets = [
+        '.hero__eyebrow',
+        '.hero__title',
+        '.hero__summary',
+        '.hero__actions',
+        '.hero__socials',
+        '.hero__visual'
+    ];
+
+    targets.forEach((selector, i) => {
+        const el = document.querySelector(selector);
+        if (!el) return;
+        el.style.opacity  = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = `opacity 600ms cubic-bezier(0.16,1,0.3,1) ${i * 90}ms,
+                                transform 600ms cubic-bezier(0.16,1,0.3,1) ${i * 90}ms`;
+
+        requestAnimationFrame(() => {
+            setTimeout(() => {
+                el.style.opacity   = '1';
+                el.style.transform = 'translateY(0)';
+            }, 120 + i * 90);
+        });
+    });
+}
+
+// ── Event Listeners ──────────────────────────────────────────
 function initEvents() {
     if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
     if (navToggle)   navToggle.addEventListener('click', toggleMobileMenu);
@@ -216,16 +306,19 @@ function initEvents() {
     navLinks.forEach(link => link.addEventListener('click', onNavLinkClick));
 
     if (scrollTopBtn) {
-        scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        scrollTopBtn.addEventListener('click', () =>
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+        );
     }
 
     const onScroll = throttle(() => {
         handleNavbarScroll();
         toggleScrollTopBtn();
         updateActiveLink();
+        updateProgressBar();
     }, 16);
-    window.addEventListener('scroll', onScroll, { passive: true });
 
+    window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', debounce(closeMobileMenu, 250));
 
     document.addEventListener('keydown', e => {
@@ -233,8 +326,8 @@ function initEvents() {
     });
 
     document.addEventListener('click', e => {
-        if (navMenu && navMenu.classList.contains('active')) {
-            if (!navbar.contains(e.target)) closeMobileMenu();
+        if (navMenu?.classList.contains('active') && !navbar.contains(e.target)) {
+            closeMobileMenu();
         }
     });
 }
@@ -243,10 +336,13 @@ function initEvents() {
 function init() {
     initTheme();
     initEvents();
+    initHeroEntrance();
     initReveal();
     initStaggeredReveal();
+    initCounters();
     initContactForm();
     setFooterYear();
+    updateProgressBar();
 }
 
 if (document.readyState === 'loading') {
@@ -256,4 +352,4 @@ if (document.readyState === 'loading') {
 }
 
 // ── Public API ───────────────────────────────────────────────
-window.Portfolio = { toggleTheme, toggleMobileMenu };
+window.Portfolio = { toggleTheme, toggleMobileMenu, smoothScrollTo };
