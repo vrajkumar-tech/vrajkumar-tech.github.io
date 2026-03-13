@@ -36,30 +36,39 @@ class CVRenderer {
             return;
         }
         
-        // Determine the correct path to cv.json based on current location
-        let cvPath = '/cv.json';
+        // Try multiple paths to find cv.json
+        const possiblePaths = [
+            '../../cv.json',  // For templates/*/index.html
+            '../cv.json',     // For templates/index.html
+            '/cv.json',       // For root level
+            './cv.json'       // Current directory
+        ];
         
-        // If we're in a template subdirectory, adjust the path
-        if (window.location.pathname.includes('/templates/')) {
-            // Calculate relative path to root
-            const pathSegments = window.location.pathname.split('/').filter(s => s);
-            const templateIndex = pathSegments.indexOf('templates');
-            if (templateIndex !== -1) {
-                // Go up from templates directory to root
-                const upLevels = templateIndex + 1;
-                cvPath = '../'.repeat(upLevels) + 'cv.json';
+        console.log('Current location:', window.location.href);
+        console.log('Current pathname:', window.location.pathname);
+        
+        let lastError = null;
+        
+        for (const cvPath of possiblePaths) {
+            try {
+                console.log('Trying to load CV data from:', cvPath);
+                const response = await fetch(cvPath);
+                
+                if (response.ok) {
+                    this.cvData = await response.json();
+                    console.log('✓ CV data loaded successfully from:', cvPath);
+                    return;
+                }
+                
+                console.log('✗ Failed to load from', cvPath, '- Status:', response.status);
+                lastError = new Error(`HTTP ${response.status} from ${cvPath}`);
+            } catch (error) {
+                console.log('✗ Error loading from', cvPath, ':', error.message);
+                lastError = error;
             }
         }
         
-        console.log('Attempting to load CV data from:', cvPath);
-        console.log('Current pathname:', window.location.pathname);
-        
-        const response = await fetch(cvPath);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status} while fetching ${cvPath}`);
-        }
-        this.cvData = await response.json();
-        console.log('CV data loaded successfully');
+        throw new Error(`Could not load cv.json from any path. Last error: ${lastError?.message}`);
     }
 
     renderAll() {
@@ -858,8 +867,8 @@ class CVRenderer {
         // Contact form
         const contactForm = document.querySelector('.contact-form');
         if (contactForm && contact?.form?.fields) {
-            contactForm.innerHTML = contact.form.fields.map(field => this.renderClassicFormField(field)).join('') + '
-                <button type="submit" class="btn">Send Message</button>';
+            contactForm.innerHTML = contact.form.fields.map(field => this.renderClassicFormField(field)).join('') + 
+                '<button type="submit" class="btn">Send Message</button>';
         }
     }
 
