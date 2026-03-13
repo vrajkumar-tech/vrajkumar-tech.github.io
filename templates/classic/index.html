@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="">
+    <title>CV - Classic Template</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --text-primary: #2c3e50;
+            --text-secondary: #7f8c8d;
+            --bg-primary: #ffffff;
+            --bg-secondary: #ecf0f1;
+            --border-color: #bdc3c7;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: var(--text-primary);
+            background: var(--bg-secondary);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Merriweather', serif;
+        }
+
+        .template-classic {
+            max-width: 1000px;
+            margin: 2rem auto;
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .header__img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid white;
+            margin-bottom: 1.5rem;
+            object-fit: cover;
+        }
+
+        .header__name {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+        }
+
+        .title {
+            font-size: 1.25rem;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .tagline {
+            font-size: 0.95rem;
+            opacity: 0.85;
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+            line-height: 1.6;
+        }
+
+        .header__contact {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .contact-item i {
+            font-size: 1.2rem;
+        }
+
+        .contact-item a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: white;
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 0.25rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Social Links */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-link {
+            color: white;
+            font-size: 1.5rem;
+            transition: opacity 0.3s ease;
+        }
+
+        .social-link:hover {
+            opacity: 0.7;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 3rem 2rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section__title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--accent-color);
+        }
+
+        /* About Section */
+        .about__text {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        /* Experience Section */
+        .experience-item {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .experience-item:last-child {
+            border-bottom: none;
+        }
+
+        .experience-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .experience-logo {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            background: var(--bg-secondary);
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+        }
+
+        .experience-company h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .period {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .role-item {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .role-item h4 {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .role-period {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .role-item ul {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .role-item li {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .role-item li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category h3 {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--bg-secondary);
+        }
+
+        .skill-list li::before {
+            content: '✓';
+            color: var(--accent-color);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        /* Education Section */
+        .edu-item {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border-radius: 0.5rem;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .edu-item h4 {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .edu-item p {
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+        }
+
+        /* Certifications Section */
+        .cert-list {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .cert-item {
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border-radius: 0.5rem;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .cert-item h4 {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .cert-item p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .cert-item a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .cert-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-color);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .footer p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Print Styles */
+        @media print {
+            .template-classic {
+                box-shadow: none;
+                margin: 0;
+            }
+
+            .btn {
+                display: none;
+            }
+
+            .section {
+                page-break-inside: avoid;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .template-classic {
+                margin: 0;
+            }
+
+            .header {
+                padding: 2rem 1rem;
+            }
+
+            .header__name {
+                font-size: 2rem;
+            }
+
+            .main-content {
+                padding: 2rem 1rem;
+            }
+
+            .experience-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="template-classic">
+        <!-- Header -->
+        <header class="header">
+            <img src="" alt="Profile" class="header__img">
+            <h1 class="header__name"></h1>
+            <p class="title"></p>
+            <p class="tagline"></p>
+            
+            <div class="header__contact">
+                <div class="contact-item">
+                    <i class='bx bx-envelope'></i>
+                    <a href="mailto:" id="email-link"></a>
+                </div>
+                <div class="contact-item">
+                    <i class='bx bx-map'></i>
+                    <span id="location"></span>
+                </div>
+                <div class="contact-item">
+                    <i class='bx bx-globe'></i>
+                    <a href="#" target="_blank" id="website-link"></a>
+                </div>
+            </div>
+
+            <div class="social-links" id="social-links"></div>
+
+            <a href="#" class="btn" download>
+                <i class='bx bx-download'></i> Download PDF
+            </a>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- About Section -->
+            <section class="section">
+                <h2 class="section__title">Professional Summary</h2>
+                <div id="about-content"></div>
+            </section>
+
+            <!-- Experience Section -->
+            <section class="section">
+                <h2 class="section__title">Professional Experience</h2>
+                <div id="experience-container"></div>
+            </section>
+
+            <!-- Skills Section -->
+            <section class="section">
+                <h2 class="section__title">Core Competencies</h2>
+                <div class="skills-grid"></div>
+            </section>
+
+            <!-- Education Section -->
+            <section class="section">
+                <h2 class="section__title">Education</h2>
+                <div id="education-container"></div>
+            </section>
+
+            <!-- Certifications Section -->
+            <section class="section">
+                <h2 class="section__title">Certifications</h2>
+                <div class="cert-list" id="cert-container"></div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; <span id="current-year"></span> <span id="footer-name"></span>. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json"></script>
+
+    <!-- CV Renderer -->
+    <script src="../../assets/js/cv-renderer.js"></script>
+    <script>
+        // Initialize CV Renderer
+        const renderer = new CVRenderer();
+
+        // Additional classic template specific rendering
+        document.addEventListener('DOMContentLoaded', () => {
+            if (renderer.cvData) {
+                const personalInfo = renderer.cvData.personalInfo;
+                
+                // Email
+                const emailLink = document.getElementById('email-link');
+                if (emailLink && personalInfo?.email) {
+                    emailLink.href = `mailto:${personalInfo.email}`;
+                    emailLink.textContent = personalInfo.email;
+                }
+
+                // Location
+                const location = document.getElementById('location');
+                if (location && personalInfo?.location?.display) {
+                    location.textContent = personalInfo.location.display;
+                }
+
+                // Website
+                const websiteLink = document.getElementById('website-link');
+                if (websiteLink && personalInfo?.website) {
+                    websiteLink.href = personalInfo.website;
+                    websiteLink.textContent = personalInfo.website.replace('https://', '');
+                }
+
+                // Social Links
+                const socialLinksContainer = document.getElementById('social-links');
+                if (socialLinksContainer && renderer.cvData.socialLinks) {
+                    socialLinksContainer.innerHTML = renderer.cvData.socialLinks.map(link => {
+                        const iconClass = renderer.getIconClass(link.platform);
+                        return `<a href="${link.url}" target="_blank" class="social-link"><i class="${iconClass}"></i></a>`;
+                    }).join('');
+                }
+
+                // About Content
+                const aboutContent = document.getElementById('about-content');
+                if (aboutContent && renderer.cvData.about?.narrative) {
+                    aboutContent.innerHTML = renderer.cvData.about.narrative.map(p => 
+                        `<p class="about__text">${p}</p>`
+                    ).join('');
+                }
+
+                // Certifications
+                const certContainer = document.getElementById('cert-container');
+                if (certContainer && renderer.cvData.certifications) {
+                    certContainer.innerHTML = renderer.cvData.certifications.map(cert => `
+                        <div class="cert-item">
+                            <h4>${cert.title}</h4>
+                            <p><strong>${cert.issuer}</strong></p>
+                            <p>${cert.description}</p>
+                            ${cert.licenseNumber ? `<p>License: ${cert.licenseNumber}</p>` : ''}
+                            <p>Issued: ${cert.issueDate}${cert.expirationDate ? ` - Expires: ${cert.expirationDate}` : ''}</p>
+                            ${cert.verificationUrl ? `<a href="${cert.verificationUrl}" target="_blank">Verify Certificate →</a>` : ''}
+                        </div>
+                    `).join('');
+                }
+
+                // Footer Name
+                const footerName = document.getElementById('footer-name');
+                if (footerName && personalInfo?.name?.full) {
+                    footerName.textContent = personalInfo.name.full;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

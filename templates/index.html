@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Templates - Choose Your Style</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 3rem 1rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 4rem;
+        }
+
+        .header__title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .header__subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .templates {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .template-card {
+            background: white;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .template-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+        }
+
+        .template-card__preview {
+            height: 300px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .template-card__preview::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+
+        .template-card__preview-icon {
+            font-size: 5rem;
+            color: rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .template-card__badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            z-index: 2;
+        }
+
+        .template-card__badge--new {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .template-card__badge--popular {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+        }
+
+        .template-card__content {
+            padding: 2rem;
+        }
+
+        .template-card__title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #1f2937;
+        }
+
+        .template-card__description {
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .template-card__features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .template-card__features li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .template-card__features i {
+            color: #10b981;
+            font-size: 1rem;
+        }
+
+        .template-card__actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+
+        .btn--primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn--primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn--secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .btn--secondary:hover {
+            background: #e5e7eb;
+        }
+
+        /* Template-specific preview styles */
+        .preview--modern {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .preview--modern .template-card__preview-icon {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .preview--classic {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+        }
+
+        .preview--classic .template-card__preview-icon {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .preview--glass {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        }
+
+        .preview--glass .template-card__preview-icon {
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .preview--animated {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+        }
+
+        .preview--animated .template-card__preview-icon {
+            color: rgba(78, 205, 196, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .preview--minimalist {
+            background: #ffffff;
+            border: 2px solid #e5e7eb;
+        }
+
+        .preview--minimalist .template-card__preview-icon {
+            color: rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.5;
+            }
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            padding: 2rem 0;
+            opacity: 0.9;
+        }
+
+        .footer__text {
+            margin-bottom: 1rem;
+        }
+
+        .footer__link {
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            transition: border-color 0.3s ease;
+        }
+
+        .footer__link:hover {
+            border-bottom-color: white;
+        }
+
+        @media (max-width: 768px) {
+            .header__title {
+                font-size: 2rem;
+            }
+
+            .templates {
+                grid-template-columns: 1fr;
+            }
+
+            .template-card__actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="header__title">Choose Your CV Template</h1>
+            <p class="header__subtitle">Select a template that best represents your professional style. All templates use the same data from cv.json.</p>
+        </header>
+
+        <div class="templates">
+            <!-- Modern Template -->
+            <div class="template-card">
+                <div class="template-card__preview preview--modern">
+                    <span class="template-card__badge template-card__badge--popular">Popular</span>
+                    <i class='bx bx-layout template-card__preview-icon'></i>
+                </div>
+                <div class="template-card__content">
+                    <h2 class="template-card__title">Modern</h2>
+                    <p class="template-card__description">A contemporary design with gradient accents, clean typography, and engaging visual hierarchy.</p>
+                    <ul class="template-card__features">
+                        <li><i class='bx bx-check-circle'></i> Gradient hero section</li>
+                        <li><i class='bx bx-check-circle'></i> Interactive timeline</li>
+                        <li><i class='bx bx-check-circle'></i> Skill cards with icons</li>
+                        <li><i class='bx bx-check-circle'></i> Responsive design</li>
+                    </ul>
+                    <div class="template-card__actions">
+                        <a href="./modern/index.html" class="btn btn--primary">
+                            <i class='bx bx-show'></i> View Template
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Classic Template -->
+            <div class="template-card">
+                <div class="template-card__preview preview--classic">
+                    <i class='bx bx-file template-card__preview-icon'></i>
+                </div>
+                <div class="template-card__content">
+                    <h2 class="template-card__title">Classic</h2>
+                    <p class="template-card__description">Traditional professional resume layout with serif fonts and structured sections.</p>
+                    <ul class="template-card__features">
+                        <li><i class='bx bx-check-circle'></i> Professional header</li>
+                        <li><i class='bx bx-check-circle'></i> Clean section dividers</li>
+                        <li><i class='bx bx-check-circle'></i> Print-optimized</li>
+                        <li><i class='bx bx-check-circle'></i> ATS-friendly</li>
+                    </ul>
+                    <div class="template-card__actions">
+                        <a href="./classic/index.html" class="btn btn--primary">
+                            <i class='bx bx-show'></i> View Template
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Glass Morphism Template -->
+            <div class="template-card">
+                <div class="template-card__preview preview--glass">
+                    <span class="template-card__badge template-card__badge--new">New</span>
+                    <i class='bx bx-droplet template-card__preview-icon'></i>
+                </div>
+                <div class="template-card__content">
+                    <h2 class="template-card__title">Glass Morphism</h2>
+                    <p class="template-card__description">Stunning frosted glass effect with vibrant gradients and modern aesthetics.</p>
+                    <ul class="template-card__features">
+                        <li><i class='bx bx-check-circle'></i> Glassmorphism UI</li>
+                        <li><i class='bx bx-check-circle'></i> Backdrop blur effects</li>
+                        <li><i class='bx bx-check-circle'></i> Vibrant gradients</li>
+                        <li><i class='bx bx-check-circle'></i> Eye-catching design</li>
+                    </ul>
+                    <div class="template-card__actions">
+                        <a href="./glass/index.html" class="btn btn--primary">
+                            <i class='bx bx-show'></i> View Template
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Animated Template -->
+            <div class="template-card">
+                <div class="template-card__preview preview--animated">
+                    <span class="template-card__badge template-card__badge--new">New</span>
+                    <i class='bx bx-pulse template-card__preview-icon'></i>
+                </div>
+                <div class="template-card__content">
+                    <h2 class="template-card__title">Animated</h2>
+                    <p class="template-card__description">Dynamic template with smooth animations, transitions, and interactive elements.</p>
+                    <ul class="template-card__features">
+                        <li><i class='bx bx-check-circle'></i> Scroll animations</li>
+                        <li><i class='bx bx-check-circle'></i> Hover effects</li>
+                        <li><i class='bx bx-check-circle'></i> Gradient text</li>
+                        <li><i class='bx bx-check-circle'></i> Dark theme</li>
+                    </ul>
+                    <div class="template-card__actions">
+                        <a href="./animated/index.html" class="btn btn--primary">
+                            <i class='bx bx-show'></i> View Template
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Minimalist Template -->
+            <div class="template-card">
+                <div class="template-card__preview preview--minimalist">
+                    <i class='bx bx-minus template-card__preview-icon'></i>
+                </div>
+                <div class="template-card__content">
+                    <h2 class="template-card__title">Minimalist</h2>
+                    <p class="template-card__description">Clean, distraction-free design focusing on content with monospace typography.</p>
+                    <ul class="template-card__features">
+                        <li><i class='bx bx-check-circle'></i> Minimal design</li>
+                        <li><i class='bx bx-check-circle'></i> Monospace fonts</li>
+                        <li><i class='bx bx-check-circle'></i> Black & white</li>
+                        <li><i class='bx bx-check-circle'></i> Content-focused</li>
+                    </ul>
+                    <div class="template-card__actions">
+                        <a href="./minimalist/index.html" class="btn btn--primary">
+                            <i class='bx bx-show'></i> View Template
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p class="footer__text">
+                All templates are powered by the same <a href="../cv.json" class="footer__link" target="_blank">cv.json</a> data file.
+            </p>
+            <p class="footer__text">
+                Built with ❤️ using headless resume architecture
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

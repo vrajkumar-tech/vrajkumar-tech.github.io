@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="">
+    <title>CV - Minimalist Template</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+            --gray-100: #f5f5f5;
+            --gray-200: #e5e5e5;
+            --gray-300: #d4d4d4;
+            --gray-400: #a3a3a3;
+            --gray-500: #737373;
+            --gray-600: #525252;
+            --gray-700: #404040;
+            --gray-800: #262626;
+            --gray-900: #171717;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--gray-900);
+            background: var(--white);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            padding: 4rem 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 6rem 0 4rem;
+        }
+
+        .hero__name {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero__title {
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+        }
+
+        .hero__summary {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: var(--gray-700);
+            max-width: 700px;
+            margin-bottom: 2rem;
+        }
+
+        .hero__meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .hero__meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hero__meta-item i {
+            font-size: 1rem;
+        }
+
+        .hero__meta-item a {
+            color: var(--gray-900);
+            text-decoration: none;
+            border-bottom: 1px solid var(--gray-300);
+            transition: border-color 0.3s ease;
+        }
+
+        .hero__meta-item a:hover {
+            border-color: var(--gray-900);
+        }
+
+        .hero__actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid var(--gray-900);
+            background: transparent;
+            color: var(--gray-900);
+        }
+
+        .btn:hover {
+            background: var(--gray-900);
+            color: var(--white);
+        }
+
+        .btn--primary {
+            background: var(--gray-900);
+            color: var(--white);
+        }
+
+        .btn--primary:hover {
+            background: var(--gray-700);
+            border-color: var(--gray-700);
+        }
+
+        .hero__stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+            padding-top: 3rem;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .hero__stat {
+            text-align: left;
+        }
+
+        .hero__stat-value {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .hero__stat-label {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Section Headers */
+        .section__header {
+            margin-bottom: 2rem;
+        }
+
+        .section__title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .section__subtitle {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        /* About Section */
+        .about__text {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--gray-700);
+            margin-bottom: 1.5rem;
+            max-width: 700px;
+        }
+
+        .about__highlights {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .about__highlight {
+            padding: 1.5rem 0;
+            border-top: 2px solid var(--gray-900);
+        }
+
+        .about__highlight-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .about__highlight-description {
+            font-size: 0.875rem;
+            line-height: 1.6;
+            color: var(--gray-600);
+        }
+
+        /* Experience Section */
+        .timeline-item {
+            margin-bottom: 3rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .timeline-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .timeline-item__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-item__company-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-item__period {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .timeline-item__summary {
+            font-size: 0.875rem;
+            line-height: 1.7;
+            color: var(--gray-600);
+            margin-bottom: 1.5rem;
+        }
+
+        .role-item {
+            margin-bottom: 2rem;
+            padding-left: 1rem;
+            border-left: 2px solid var(--gray-200);
+        }
+
+        .role-item__position {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .role-item__period {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+            font-family: 'IBM Plex Mono', monospace;
+            margin-bottom: 1rem;
+        }
+
+        .role-item__summary {
+            font-size: 0.875rem;
+            line-height: 1.7;
+            color: var(--gray-600);
+            margin-bottom: 1rem;
+        }
+
+        .role-item__achievements {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .role-item__achievements li {
+            font-size: 0.875rem;
+            line-height: 1.6;
+            color: var(--gray-600);
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .role-item__achievements li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: var(--gray-400);
+        }
+
+        .role-item__achievements strong {
+            color: var(--gray-900);
+            font-weight: 500;
+        }
+
+        .role-item__skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            background: var(--gray-100);
+            color: var(--gray-700);
+            border: 1px solid var(--gray-200);
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        /* Capabilities Section */
+        .capability-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .capability-card {
+            padding: 1.5rem 0;
+            border-top: 2px solid var(--gray-900);
+        }
+
+        .capability-card__title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .capability-card__description {
+            font-size: 0.875rem;
+            line-height: 1.6;
+            color: var(--gray-600);
+            margin-bottom: 1rem;
+        }
+
+        .capability-card__skills {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+        }
+
+        .capability-skill {
+            font-size: 0.75rem;
+            color: var(--gray-700);
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .capability-skill::before {
+            content: '✓';
+            margin-right: 0.5rem;
+            color: var(--gray-400);
+        }
+
+        /* Certifications Section */
+        .cert-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .cert-card {
+            padding: 1.5rem 0;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .cert-card__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 0.5rem;
+        }
+
+        .cert-card__title {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .cert-card__issuer {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-bottom: 0.75rem;
+        }
+
+        .cert-card__description {
+            font-size: 0.875rem;
+            line-height: 1.6;
+            color: var(--gray-600);
+            margin-bottom: 0.75rem;
+        }
+
+        .cert-card__verification {
+            font-size: 0.75rem;
+            color: var(--gray-900);
+            text-decoration: none;
+            border-bottom: 1px solid var(--gray-300);
+            transition: border-color 0.3s ease;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .cert-card__verification:hover {
+            border-color: var(--gray-900);
+        }
+
+        /* Education Section */
+        .education__items {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .education-item {
+            padding: 1.5rem 0;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .education-item__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 0.5rem;
+        }
+
+        .education-item__degree {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .education-item__period {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .education-item__field {
+            font-size: 0.875rem;
+            color: var(--gray-700);
+            margin-bottom: 0.25rem;
+        }
+
+        .education-item__institution {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        /* Insights Section */
+        .blog-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .blog-card {
+            padding: 1.5rem 0;
+            border-top: 1px solid var(--gray-200);
+            transition: padding-left 0.3s ease;
+        }
+
+        .blog-card:hover {
+            padding-left: 1rem;
+        }
+
+        .blog-card__badge {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .blog-card__title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-card__description {
+            font-size: 0.875rem;
+            line-height: 1.6;
+            color: var(--gray-600);
+            margin-bottom: 1rem;
+        }
+
+        .blog-card__link {
+            font-size: 0.875rem;
+            color: var(--gray-900);
+            text-decoration: none;
+            border-bottom: 1px solid var(--gray-300);
+            transition: border-color 0.3s ease;
+        }
+
+        .blog-card__link:hover {
+            border-color: var(--gray-900);
+        }
+
+        /* Contact Section */
+        .contact__details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-detail {
+            font-size: 0.875rem;
+        }
+
+        .contact-detail i {
+            margin-right: 0.5rem;
+            color: var(--gray-400);
+        }
+
+        .contact-detail a {
+            color: var(--gray-900);
+            text-decoration: none;
+            border-bottom: 1px solid var(--gray-300);
+            transition: border-color 0.3s ease;
+        }
+
+        .contact-detail a:hover {
+            border-color: var(--gray-900);
+        }
+
+        .form__group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form__label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--gray-700);
+        }
+
+        .form__input,
+        .form__select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--gray-300);
+            font-family: inherit;
+            font-size: 0.875rem;
+            background: var(--white);
+            color: var(--gray-900);
+            transition: border-color 0.3s ease;
+        }
+
+        .form__input::placeholder {
+            color: var(--gray-400);
+        }
+
+        .form__input:focus,
+        .form__select:focus {
+            outline: none;
+            border-color: var(--gray-900);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 3rem 0;
+            border-top: 1px solid var(--gray-200);
+            margin-top: 4rem;
+        }
+
+        .footer__content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer__logo {
+            font-size: 1.25rem;
+            font-weight: 600;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .footer__socials {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer__social-link {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s ease;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .footer__social-link:hover {
+            color: var(--gray-900);
+            border-bottom-color: var(--gray-900);
+        }
+
+        .footer__bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--gray-200);
+            font-size: 0.75rem;
+            color: var(--gray-600);
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero__name {
+                font-size: 2rem;
+            }
+
+            .hero__stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .about__highlights {
+                grid-template-columns: 1fr;
+            }
+
+            .capability-card__skills {
+                grid-template-columns: 1fr;
+            }
+
+            .contact__details {
+                grid-template-columns: 1fr;
+            }
+
+            .footer__content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media print {
+            .btn,
+            .hero__actions {
+                display: none;
+            }
+
+            .section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="hero__name"></h1>
+            <p class="hero__title"></p>
+            <p class="hero__summary"></p>
+            
+            <div class="hero__meta">
+                <div class="hero__meta-item">
+                    <i class='bx bx-envelope'></i>
+                    <a href="mailto:" id="email-link"></a>
+                </div>
+                <div class="hero__meta-item">
+                    <i class='bx bx-map'></i>
+                    <span id="location"></span>
+                </div>
+                <div class="hero__meta-item">
+                    <i class='bx bx-globe'></i>
+                    <a href="#" target="_blank" id="website-link"></a>
+                </div>
+            </div>
+
+            <div class="hero__actions">
+                <a href="#" class="btn btn--primary" download>
+                    <i class='bx bx-download'></i>
+                    Download Resume
+                </a>
+                <a href="#contact" class="btn">
+                    <i class='bx bx-envelope'></i>
+                    Contact
+                </a>
+            </div>
+
+            <div class="hero__stats"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title"></h2>
+            </div>
+            <div id="about-narrative"></div>
+            <div class="about__highlights"></div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="section">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">Experience</h2>
+            </div>
+            <div class="timeline"></div>
+        </div>
+    </section>
+
+    <!-- Capabilities Section -->
+    <section id="capabilities" class="section">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">Capabilities</h2>
+            </div>
+            <div class="capability-grid"></div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications" class="section">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">Certifications</h2>
+            </div>
+            <div class="cert-grid"></div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="section">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">Education</h2>
+            </div>
+            <div class="education__items"></div>
+        </div>
+    </section>
+
+    <!-- Insights Section -->
+    <section id="insights" class="section">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">Insights</h2>
+            </div>
+            <div class="blog-grid"></div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title"></h2>
+                <p class="section__subtitle"></p>
+            </div>
+            <div class="contact__details"></div>
+            <form id="contact-form"></form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__logo"></div>
+                <div class="footer__socials"></div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; <span id="current-year"></span> All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="application/ld+json"></script>
+    <script src="../../assets/js/cv-renderer.js"></script>
+    <script>
+        const renderer = new CVRenderer();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (renderer.cvData) {
+                const personalInfo = renderer.cvData.personalInfo;
+                
+                // Hero name
+                const heroName = document.querySelector('.hero__name');
+                if (heroName && personalInfo?.name?.full) {
+                    heroName.textContent = personalInfo.name.full;
+                }
+
+                // Hero title
+                const heroTitle = document.querySelector('.hero__title');
+                if (heroTitle && personalInfo?.title) {
+                    heroTitle.textContent = personalInfo.title;
+                }
+
+                // Hero summary
+                const heroSummary = document.querySelector('.hero__summary');
+                if (heroSummary && personalInfo?.tagline) {
+                    heroSummary.textContent = personalInfo.tagline;
+                }
+
+                // Email
+                const emailLink = document.getElementById('email-link');
+                if (emailLink && personalInfo?.email) {
+                    emailLink.href = `mailto:${personalInfo.email}`;
+                    emailLink.textContent = personalInfo.email;
+                }
+
+                // Location
+                const location = document.getElementById('location');
+                if (location && personalInfo?.location?.display) {
+                    location.textContent = personalInfo.location.display;
+                }
+
+                // Website
+                const websiteLink = document.getElementById('website-link');
+                if (websiteLink && personalInfo?.website) {
+                    websiteLink.href = personalInfo.website;
+                    websiteLink.textContent = personalInfo.website.replace('https://', '');
+                }
+
+                // About narrative
+                const aboutNarrative = document.getElementById('about-narrative');
+                if (aboutNarrative && renderer.cvData.about?.narrative) {
+                    aboutNarrative.innerHTML = renderer.cvData.about.narrative.map(p => 
+                        `<p class="about__text">${p}</p>`
+                    ).join('');
+                }
+
+                // About section title
+                const aboutTitle = document.querySelector('#about .section__title');
+                if (aboutTitle && renderer.cvData.about?.eyebrow) {
+                    aboutTitle.textContent = renderer.cvData.about.eyebrow;
+                }
+
+                // Contact section title
+                const contactTitle = document.querySelector('#contact .section__title');
+                if (contactTitle && renderer.cvData.contact?.title) {
+                    contactTitle.textContent = renderer.cvData.contact.title;
+                }
+
+                // Contact section subtitle
+                const contactSubtitle = document.querySelector('#contact .section__subtitle');
+                if (contactSubtitle && renderer.cvData.contact?.subtitle) {
+                    contactSubtitle.textContent = renderer.cvData.contact.subtitle;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
