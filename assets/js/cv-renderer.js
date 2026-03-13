@@ -21,6 +21,12 @@ class CVRenderer {
     }
 
     async loadCVData() {
+        // Use inline data if available, otherwise fetch from file
+        if (window.cvData) {
+            this.cvData = window.cvData;
+            return;
+        }
+        
         const response = await fetch('/cv.json');
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
