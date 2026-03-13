@@ -1,0 +1,426 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "lastUpdated": "2025-01-14",
+    "template": "professional-portfolio"
+  },
+  "personalInfo": {
+    "name": {
+      "first": "Rajkumar",
+      "last": "Venkataraman",
+      "full": "Rajkumar Venkataraman",
+      "display": "Rajkumar<br><span class=\"hero__title-accent\">Venkataraman</span>"
+    },
+    "title": "Director of Product Engineering",
+    "tagline": "Engineering executive with 15+ years architecting fintech platforms at scale — from credit risk infrastructure and lending systems to AI-driven data products. I build the teams, the culture, and the technology that powers financial outcomes.",
+    "profileImage": "/assets/img/profile.png",
+    "location": {
+      "city": "Chennai",
+      "country": "India",
+      "display": "Chennai, India (Remote-Ready)"
+    },
+    "email": "rajkumarv88@outlook.com",
+    "phone": null,
+    "website": "https://rkoots.github.io/",
+    "resumeDownload": "/assets/pdf/Rajkumar_V_2023_D.pdf"
+  },
+  "socialLinks": [
+    {
+      "platform": "linkedin",
+      "url": "https://www.linkedin.com/in/rkoots/",
+      "username": "rkoots",
+      "display": "linkedin.com/in/rkoots"
+    },
+    {
+      "platform": "github",
+      "url": "https://github.com/rkoots/",
+      "username": "rkoots",
+      "display": "github.com/rkoots"
+    },
+    {
+      "platform": "twitter",
+      "url": "https://x.com/rkoots",
+      "username": "rkoots",
+      "display": "@rkoots"
+    },
+    {
+      "platform": "devto",
+      "url": "https://dev.to/rkoots",
+      "username": "rkoots",
+      "display": "dev.to/rkoots"
+    }
+  ],
+  "stats": [
+    {
+      "value": "15+",
+      "label": "Years Experience",
+      "count": 15,
+      "suffix": "+"
+    },
+    {
+      "value": "70+",
+      "label": "Engineers Led",
+      "count": 70,
+      "suffix": "+"
+    },
+    {
+      "value": "10+",
+      "label": "Products Delivered",
+      "count": 10,
+      "suffix": "+"
+    },
+    {
+      "value": "5+",
+      "label": "Technology Teams Managed",
+      "count": 5,
+      "suffix": "+"
+    }
+  ],
+  "about": {
+    "eyebrow": "Leadership Profile",
+    "title": "Engineering at Scale,<br>Purpose-Driven",
+    "narrative": [
+      "I don't just ship software — I build the systems, teams, and culture that allow organisations to compete at scale in fintech. Over 15 years, I've moved from hands-on engineering to executive leadership, accumulating deep expertise across product architecture, distributed systems, and financial services technology.",
+      "At ADF Data Science, I lead a distributed organisation of 70+ engineers across product, platform, and data engineering. My focus is on translating business ambition into executable technical strategy — reducing time-to-market, improving reliability, and building teams that can operate at enterprise scale without losing product agility.",
+      "My background spans the full lending lifecycle: origination, credit scoring, risk analytics, collections, and regulatory reporting. I understand fintech not just as a domain but as a set of constraints that demand both engineering rigour and product empathy."
+    ],
+    "highlights": [
+      {
+        "title": "Team Architecture",
+        "description": "Built and scaled engineering organisations from seed to 70+ — across India and remote globally. Structured hiring, levelling, and career frameworks from scratch.",
+        "icon": "users"
+      },
+      {
+        "title": "Platform Architecture",
+        "description": "Designed multi-tenant lending platforms, credit decisioning engines, and real-time analytics pipelines handling millions of transactions in regulated environments.",
+        "icon": "monitor"
+      },
+      {
+        "title": "DevOps Transformation",
+        "description": "Led cloud-native migration and CI/CD adoption reducing deployment cycles by 70% and achieving 99.9% SLA across production fintech workloads.",
+        "icon": "activity"
+      },
+      {
+        "title": "Fintech Domain Depth",
+        "description": "15+ years in lending, credit risk, and financial data systems — from scorecard design to regulatory compliance architecture in high-volume consumer finance.",
+        "icon": "clock"
+      }
+    ]
+  },
+  "experience": [
+    {
+      "id": "adf-data-science",
+      "company": {
+        "name": "ADF Data Science Pvt Ltd",
+        "logo": "/assets/img/ADF_logo.png",
+        "website": "https://adfdatascience.com"
+      },
+      "position": "Director of Product Engineering",
+      "period": {
+        "start": "2015-10",
+        "end": "present",
+        "display": "Oct 2015 – Present"
+      },
+      "location": "Chennai, India (Remote)",
+      "current": true,
+      "summary": "Executive engineering leadership for a fintech-focused data science organisation. Accountable for product engineering strategy, platform architecture, and org-wide engineering culture across lending, analytics, and AI product lines.",
+      "achievements": [
+        {
+          "title": "Organisation Scale:",
+          "description": "Built and led a 70+ engineer organisation across product engineering, platform, data, and ML teams — establishing hiring pipelines, career ladders, and a distributed team operating model."
+        },
+        {
+          "title": "Fintech Platform Architecture:",
+          "description": "Architected a multi-tenant lending platform supporting end-to-end loan origination, risk decisioning, collections, and regulatory reporting. Platform processes 500K+ loan applications annually."
+        },
+        {
+          "title": "DevOps Transformation:",
+          "description": "Led cloud-native migration to AWS with Kubernetes orchestration, GitOps workflows, and automated CI/CD — reducing release cycles from bi-weekly to daily with 99.9% production uptime."
+        },
+        {
+          "title": "AI-Driven Products:",
+          "description": "Shipped 10+ data products including credit scorecards, predictive delinquency models, fraud detection pipelines, and an LLM-powered collections assistance platform."
+        }
+      ],
+      "skills": ["Fintech", "Lending Systems", "AWS", "Kubernetes", "ML Ops", "Engineering Leadership"]
+    },
+    {
+      "id": "gain-credit",
+      "company": {
+        "name": "Gain Credit (formerly Global Analytics)",
+        "logo": "/assets/img/GA.png",
+        "website": null
+      },
+      "position": "Senior Technology Operation Engineer (DevOps)",
+      "period": {
+        "start": "2012-03",
+        "end": "2015-10",
+        "display": "Mar 2012 – Oct 2015"
+      },
+      "location": null,
+      "current": false,
+      "summary": "Senior Operations Engineer responsible for infrastructure automation, CI/CD pipelines, and systems reliability for lending management platforms. Drove automation initiatives that streamlined operations and enhanced system performance.",
+      "achievements": [
+        {
+          "title": "Automation Excellence:",
+          "description": "Automated LMS batch systems and financial reporting pipelines, reducing manual processing time by 80% and improving data accuracy."
+        },
+        {
+          "title": "CI/CD Implementation:",
+          "description": "Built comprehensive Jenkins pipelines for automated testing, deployment, and payouts — enabling daily releases with zero-downtime deployments."
+        },
+        {
+          "title": "Database Optimisation:",
+          "description": "Enhanced MySQL performance through query optimisation, indexing strategies, and replication setup — supporting 10x transaction volume growth."
+        },
+        {
+          "title": "Infrastructure as Code:",
+          "description": "Implemented configuration management and monitoring solutions, improving system reliability to 99.95% uptime."
+        }
+      ],
+      "skills": ["DevOps", "Jenkins", "MySQL", "Automation", "CI/CD", "Infrastructure"]
+    },
+    {
+      "id": "energica-aspl",
+      "company": {
+        "name": "Energica ASPL",
+        "logo": "/assets/img/Energica_Final_Logo.png",
+        "website": null
+      },
+      "position": "Software Engineer",
+      "period": {
+        "start": "2010-07",
+        "end": "2012-03",
+        "display": "Jul 2010 – Mar 2012"
+      },
+      "location": null,
+      "current": false,
+      "summary": "Software Engineer focused on Python development, REST API design, and automation solutions. Built invoice processing systems and analytics platforms that drove digital transformation for enterprise clients.",
+      "achievements": [
+        {
+          "title": "API Development:",
+          "description": "Designed and implemented RESTful APIs for invoice automation, processing 50K+ invoices monthly with 99.8% accuracy."
+        },
+        {
+          "title": "Analytics Platform:",
+          "description": "Built Python-based analytics engine providing real-time insights on invoice data, reducing reporting time from hours to minutes."
+        },
+        {
+          "title": "OCR Integration:",
+          "description": "Implemented OCR conversion systems for digitising paper invoices, achieving 95% accuracy in automated data extraction."
+        },
+        {
+          "title": "Digital Transformation:",
+          "description": "Contributed to end-to-end digital transformation projects, helping clients reduce manual processing costs by 60%."
+        }
+      ],
+      "skills": ["Python", "REST APIs", "OCR", "Automation", "Analytics", "Digital Transformation"]
+    }
+  ],
+  "capabilities": [
+    {
+      "title": "Engineering Leadership",
+      "description": "Leading, scaling and structuring high-performing distributed engineering organisations.",
+      "icon": "users",
+      "skills": [
+        "Engineering Org Design & Scaling",
+        "Career Ladders & Performance Frameworks",
+        "Distributed Team Management",
+        "Technical Hiring & Onboarding",
+        "OKR Alignment & Delivery Planning",
+        "Cross-functional Stakeholder Management"
+      ]
+    },
+    {
+      "title": "Architecture & Scalability",
+      "description": "Designing systems that scale reliably under financial-grade workload and compliance demands.",
+      "icon": "grid",
+      "skills": [
+        "Microservices & Event-Driven Architecture",
+        "Distributed Systems Design",
+        "Multi-tenant Platform Engineering",
+        "API Design & Integration Architecture",
+        "Domain-Driven Design (DDD)",
+        "High-Availability & Fault Tolerance"
+      ]
+    },
+    {
+      "title": "Cloud & DevOps",
+      "description": "End-to-end cloud transformation and DevOps culture adoption in regulated fintech environments.",
+      "icon": "activity",
+      "skills": [
+        "AWS (EC2, EKS, RDS, Lambda, S3)",
+        "Azure (AKS, Pipelines, DevOps)",
+        "Kubernetes & Docker Orchestration",
+        "CI/CD — GitHub Actions, Jenkins, ArgoCD",
+        "Infrastructure as Code (Terraform)",
+        "Observability — Prometheus, Grafana, ELK"
+      ]
+    },
+    {
+      "title": "AI & Automation",
+      "description": "Applied machine learning for fintech use cases — from credit risk to intelligent automation.",
+      "icon": "layers",
+      "skills": [
+        "ML Model Development & ML Ops",
+        "Credit Scorecard & Risk Modelling",
+        "Python, XGBoost, Scikit-learn, TensorFlow",
+        "LLM Integration & Generative AI Products",
+        "Feature Engineering & Data Pipelines",
+        "Fraud Detection & Anomaly Systems"
+      ]
+    },
+    {
+      "title": "Product & Agile",
+      "description": "Product-aligned engineering delivery with lean, iterative execution and business impact focus.",
+      "icon": "git-branch",
+      "skills": [
+        "Product Roadmap Strategy",
+        "Agile / Scrum at Scale (SAFe)",
+        "Sprint Planning & Velocity Management",
+        "Technical Debt Governance",
+        "Lean Six Sigma Process Optimisation",
+        "Engineering KPIs & DORA Metrics"
+      ]
+    },
+    {
+      "title": "Fintech Domain",
+      "description": "Deep domain expertise across the full financial services technology stack.",
+      "icon": "bar-chart",
+      "skills": [
+        "Lending Origination & Servicing Platforms",
+        "Credit Risk & Bureau Integrations",
+        "Regulatory Compliance (RBI, GDPR)",
+        "Payment Rails & Reconciliation",
+        "Collections & Delinquency Management",
+        "Financial Data Warehousing"
+      ]
+    }
+  ],
+  "certifications": [
+    {
+      "title": "Lean Six Sigma Green Belt",
+      "issuer": "Process Excellence Certification",
+      "description": "Applied process optimisation and continuous improvement methodologies across engineering delivery pipelines.",
+      "badge": "green"
+    },
+    {
+      "title": "Advanced Artificial Intelligence",
+      "issuer": "AI Specialisation Program",
+      "description": "Advanced coursework in machine learning, deep learning, and applied AI system design for production environments.",
+      "badge": "blue"
+    },
+    {
+      "title": "Agile Scrum Master",
+      "issuer": "Agile Leadership Certification",
+      "description": "Certified Scrum Master with hands-on experience facilitating Agile transformation at team and department scale.",
+      "badge": "orange"
+    },
+    {
+      "title": "System Integration Training",
+      "issuer": "Enterprise Integration Specialisation",
+      "description": "Specialised training in enterprise integration patterns, middleware architecture, and API-led connectivity at scale.",
+      "badge": "purple"
+    },
+    {
+      "title": ".NET Programming",
+      "issuer": "Microsoft Technology Certification",
+      "description": "Certified proficiency in .NET ecosystem including C#, ASP.NET, and enterprise application architecture patterns.",
+      "badge": "teal"
+    }
+  ],
+  "education": [
+    {
+      "degree": "Bachelor of Engineering",
+      "field": "Computer Science & Engineering",
+      "institution": "VTU, Bangalore",
+      "period": "2006 - 2010"
+    }
+  ],
+  "insights": [
+    {
+      "title": "Platform Engineering News & Analysis",
+      "description": "Curated signals from the world of fintech infrastructure, cloud-native platforms, and distributed system design.",
+      "category": "Engineering Insights",
+      "url": "https://rkoots.github.io/technews/",
+      "badge": "blue"
+    },
+    {
+      "title": "AI & Fintech Perspectives",
+      "description": "Quick-reference guides and deep dives into applying generative AI, ML models, and intelligent automation in financial services.",
+      "category": "AI & Fintech",
+      "url": "https://rkoots.github.io/quickref/",
+      "badge": "purple"
+    },
+    {
+      "title": "DevOps & Platform Playbooks",
+      "description": "Practical runbooks, architectural patterns, and lessons learned building and scaling cloud-native fintech platforms.",
+      "category": "DevOps & Platform",
+      "url": "https://rkoots.github.io/blog/",
+      "badge": "green"
+    },
+    {
+      "title": "Engineering Standards & Style",
+      "description": "Opinionated guides on engineering craft — code standards, API design, documentation, and the culture of technical excellence.",
+      "category": "Standards & Craft",
+      "url": "https://rkoots.github.io/styleguide/",
+      "badge": "orange"
+    }
+  ],
+  "contact": {
+    "eyebrow": "Let's Connect",
+    "title": "Get In Touch",
+    "subtitle": "Open to leadership opportunities, advisory engagements, and fintech architecture conversations",
+    "quote": "The best engineering leaders I know spend as much time thinking about the organisation as they do about the architecture.",
+    "availability": "Available for senior leadership discussions",
+    "form": {
+      "fields": [
+        {
+          "name": "name",
+          "label": "Full Name",
+          "type": "text",
+          "placeholder": "Your name",
+          "required": true,
+          "autocomplete": "name"
+        },
+        {
+          "name": "email",
+          "label": "Email Address",
+          "type": "email",
+          "placeholder": "you@company.com",
+          "required": true,
+          "autocomplete": "email"
+        },
+        {
+          "name": "subject",
+          "label": "Subject",
+          "type": "select",
+          "options": [
+            { "value": "", "text": "Select a topic" },
+            { "value": "leadership", "text": "Leadership Opportunity" },
+            { "value": "advisory", "text": "Advisory / Consulting" },
+            { "value": "architecture", "text": "Architecture Discussion" },
+            { "value": "speaking", "text": "Speaking Engagement" },
+            { "value": "other", "text": "Other" }
+          ],
+          "required": false
+        },
+        {
+          "name": "message",
+          "label": "Message",
+          "type": "textarea",
+          "placeholder": "Tell me about the opportunity or question...",
+          "required": true,
+          "rows": 5
+        }
+      ]
+    }
+  },
+  "seo": {
+    "title": "Rajkumar Venkataraman — Director of Product Engineering | Fintech & AI Platform Leader",
+    "description": "Rajkumar Venkataraman — Director of Product Engineering with 15+ years architecting scalable fintech platforms, leading distributed engineering organisations, and driving AI-powered product strategy. RKoots Engineering Leadership.",
+    "keywords": "Director of Engineering, Technology Leader, Engineering Leadership, Python Architect, Java Backend Expert, AI-Driven Systems, Scalable Architecture, Cloud Engineering, DevOps Strategy, Digital Transformation, RKoots, RKoots Technology Leadership, RKoots Engineering Strategy, RKoots Platform Architecture, Fintech Engineering, Lending Platform",
+    "author": "Rajkumar Venkataraman",
+    "image": "https://rkoots.github.io/assets/img/profile.png"
+  }
+}
