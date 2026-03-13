@@ -17,6 +17,15 @@ class CVRenderer {
             this.setupEventListeners();
         } catch (error) {
             console.error('Failed to initialize CV renderer:', error);
+            // Display error message on page
+            document.body.innerHTML = `
+                <div style="padding: 2rem; font-family: Arial, sans-serif;">
+                    <h1>Error Loading CV Data</h1>
+                    <p>Could not load cv.json file. Please check the file exists and the path is correct.</p>
+                    <p>Error: ${error.message}</p>
+                    <p>Path attempted: ${window.location.pathname.includes('/templates/') ? 'relative path' : '/cv.json'}</p>
+                </div>
+            `;
         }
     }
 
@@ -27,11 +36,30 @@ class CVRenderer {
             return;
         }
         
-        const response = await fetch('/cv.json');
+        // Determine the correct path to cv.json based on current location
+        let cvPath = '/cv.json';
+        
+        // If we're in a template subdirectory, adjust the path
+        if (window.location.pathname.includes('/templates/')) {
+            // Calculate relative path to root
+            const pathSegments = window.location.pathname.split('/').filter(s => s);
+            const templateIndex = pathSegments.indexOf('templates');
+            if (templateIndex !== -1) {
+                // Go up from templates directory to root
+                const upLevels = templateIndex + 1;
+                cvPath = '../'.repeat(upLevels) + 'cv.json';
+            }
+        }
+        
+        console.log('Attempting to load CV data from:', cvPath);
+        console.log('Current pathname:', window.location.pathname);
+        
+        const response = await fetch(cvPath);
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error(`HTTP error! status: ${response.status} while fetching ${cvPath}`);
         }
         this.cvData = await response.json();
+        console.log('CV data loaded successfully');
     }
 
     renderAll() {
