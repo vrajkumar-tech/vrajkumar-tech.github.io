@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Choose from 6 professional CV templates: Modern, Classic, Animated, Glass, Minimalist, and Default. Showcase your engineering leadership and fintech expertise with style.">
+    <meta name="description" content="Choose from 10 professional CV templates: Modern, Classic, Animated, Glass, Minimalist, Default, Gradient Flow, Neon, Parallax, and Particle. Showcase your engineering leadership and fintech expertise with style.">
     <meta name="keywords" content="CV Templates, Resume Templates, Professional CV, Engineering CV, Fintech Resume, Career Portfolio, Interactive CV, Modern Resume">
     <meta name="author" content="Rajkumar Venkataraman">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
@@ -14,7 +14,7 @@
     <meta property="og:url" content="">
     <meta property="og:site_name" content="Rajkumar Venkataraman">
     <meta property="og:title" content="CV Templates - Choose Your Style">
-    <meta property="og:description" content="Choose from 6 professional CV templates to showcase your engineering leadership and fintech expertise.">
+    <meta property="og:description" content="Choose from 10 professional CV templates to showcase your engineering leadership and fintech expertise.">
     <meta property="og:image" content="">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -35,7 +35,7 @@
       "@type": "WebPage",
       "name": "CV Templates",
       "url": "",
-      "description": "Choose from 6 professional CV templates to showcase your engineering leadership and fintech expertise.",
+      "description": "Choose from 10 professional CV templates to showcase your engineering leadership and fintech expertise.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Rajkumar Venkataraman",
@@ -287,6 +287,55 @@
             color: rgba(0, 0, 0, 0.1);
         }
 
+        .preview--gradient-flow {
+            background: linear-gradient(135deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+            background-size: 400% 400%;
+            animation: gradientFlow 15s ease infinite;
+        }
+
+        .preview--gradient-flow .template-card__preview-icon {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .preview--neon {
+            background: #0a0e27;
+        }
+
+        .preview--neon .template-card__preview-icon {
+            color: #00f3ff;
+            text-shadow: 0 0 10px #00f3ff, 0 0 20px #00f3ff, 0 0 30px #00f3ff;
+        }
+
+        .preview--parallax {
+            background: linear-gradient(135deg, #141e30, #243b55);
+        }
+
+        .preview--parallax .template-card__preview-icon {
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .preview--particle {
+            background: radial-gradient(circle at center, #1e3c72, #2a5298);
+        }
+
+        .preview--particle .template-card__preview-icon {
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .preview--default {
+            background: linear-gradient(135deg, #3a7bd5, #00d2ff);
+        }
+
+        .preview--default .template-card__preview-icon {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         @keyframes pulse {
             0%, 100% {
                 transform: scale(1);
@@ -450,6 +499,120 @@
                     </ul>
                     <div class="template-card__actions">
                         <a href="./minimalist/index.html" class="btn btn--primary">
+                            <i class='bx bx-show'></i> View Template
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Default Template -->
+            <div class="template-card">
+                <div class="template-card__preview preview--default">
+                    <i class='bx bx-file-blank template-card__preview-icon'></i>
+                </div>
+                <div class="template-card__content">
+                    <h2 class="template-card__title">Default</h2>
+                    <p class="template-card__description">Simple and straightforward template with clean layout and professional styling.</p>
+                    <ul class="template-card__features">
+                        <li><i class='bx bx-check-circle'></i> Clean layout</li>
+                        <li><i class='bx bx-check-circle'></i> Professional styling</li>
+                        <li><i class='bx bx-check-circle'></i> Easy to read</li>
+                        <li><i class='bx bx-check-circle'></i> Versatile design</li>
+                    </ul>
+                    <div class="template-card__actions">
+                        <a href="./default/index.html" class="btn btn--primary">
+                            <i class='bx bx-show'></i> View Template
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gradient Flow Template -->
+            <div class="template-card">
+                <div class="template-card__preview preview--gradient-flow">
+                    <span class="template-card__badge template-card__badge--new">New</span>
+                    <i class='bx bx-water template-card__preview-icon'></i>
+                </div>
+                <div class="template-card__content">
+                    <h2 class="template-card__title">Gradient Flow</h2>
+                    <p class="template-card__description">Dynamic flowing gradients with smooth color transitions and modern aesthetics.</p>
+                    <ul class="template-card__features">
+                        <li><i class='bx bx-check-circle'></i> Animated gradients</li>
+                        <li><i class='bx bx-check-circle'></i> Smooth transitions</li>
+                        <li><i class='bx bx-check-circle'></i> Vibrant colors</li>
+                        <li><i class='bx bx-check-circle'></i> Eye-catching design</li>
+                    </ul>
+                    <div class="template-card__actions">
+                        <a href="./gradient-flow/index.html" class="btn btn--primary">
+                            <i class='bx bx-show'></i> View Template
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Neon Template -->
+            <div class="template-card">
+                <div class="template-card__preview preview--neon">
+                    <span class="template-card__badge template-card__badge--new">New</span>
+                    <i class='bx bx-bolt template-card__preview-icon'></i>
+                </div>
+                <div class="template-card__content">
+                    <h2 class="template-card__title">Neon</h2>
+                    <p class="template-card__description">Futuristic cyberpunk-inspired design with glowing neon effects and dark theme.</p>
+                    <ul class="template-card__features">
+                        <li><i class='bx bx-check-circle'></i> Neon glow effects</li>
+                        <li><i class='bx bx-check-circle'></i> Dark theme</li>
+                        <li><i class='bx bx-check-circle'></i> Cyberpunk aesthetic</li>
+                        <li><i class='bx bx-check-circle'></i> Bold typography</li>
+                    </ul>
+                    <div class="template-card__actions">
+                        <a href="./neon/index.html" class="btn btn--primary">
+                            <i class='bx bx-show'></i> View Template
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Parallax Template -->
+            <div class="template-card">
+                <div class="template-card__preview preview--parallax">
+                    <span class="template-card__badge template-card__badge--new">New</span>
+                    <i class='bx bx-layer template-card__preview-icon'></i>
+                </div>
+                <div class="template-card__content">
+                    <h2 class="template-card__title">Parallax</h2>
+                    <p class="template-card__description">Immersive scrolling experience with depth and layered parallax effects.</p>
+                    <ul class="template-card__features">
+                        <li><i class='bx bx-check-circle'></i> Parallax scrolling</li>
+                        <li><i class='bx bx-check-circle'></i> Depth effects</li>
+                        <li><i class='bx bx-check-circle'></i> Layered design</li>
+                        <li><i class='bx bx-check-circle'></i> Immersive experience</li>
+                    </ul>
+                    <div class="template-card__actions">
+                        <a href="./parallax/index.html" class="btn btn--primary">
+                            <i class='bx bx-show'></i> View Template
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Particle Template -->
+            <div class="template-card">
+                <div class="template-card__preview preview--particle">
+                    <span class="template-card__badge template-card__badge--new">New</span>
+                    <i class='bx bx-scatter-chart template-card__preview-icon'></i>
+                </div>
+                <div class="template-card__content">
+                    <h2 class="template-card__title">Particle</h2>
+                    <p class="template-card__description">Interactive particle system background with dynamic animations and effects.</p>
+                    <ul class="template-card__features">
+                        <li><i class='bx bx-check-circle'></i> Particle effects</li>
+                        <li><i class='bx bx-check-circle'></i> Interactive background</li>
+                        <li><i class='bx bx-check-circle'></i> Dynamic animations</li>
+                        <li><i class='bx bx-check-circle'></i> Modern tech feel</li>
+                    </ul>
+                    <div class="template-card__actions">
+                        <a href="./particle/index.html" class="btn btn--primary">
                             <i class='bx bx-show'></i> View Template
                         </a>
                     </div>
