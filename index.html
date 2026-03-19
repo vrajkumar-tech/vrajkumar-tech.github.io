@@ -3,292 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <meta name="author" content="">
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-    <link rel="canonical" href="">
+    <title>Loading Your CV...</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="profile">
-    <meta property="og:url" content="">
-    <meta property="og:site_name" content="">
-    <meta property="og:title" content="">
-    <meta property="og:description" content="">
-    <meta property="og:image" content="">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:locale" content="en_IN">
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@rkoots">
-    <meta name="twitter:creator" content="@rkoots">
-    <meta name="twitter:title" content="">
-    <meta name="twitter:description" content="">
-    <meta name="twitter:image" content="">
+        .loader-container {
+            text-align: center;
+            color: white;
+        }
 
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": []
-    }
-    </script>
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 2rem;
+        }
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 
-    <!-- Performance Hints -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        .loader-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="/assets/css/styles.css">
+        .loader-subtext {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
 
-    <title></title>
+        .fallback {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            max-width: 400px;
+        }
+
+        .fallback-title {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .fallback-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .fallback-link {
+            padding: 0.75rem 1.5rem;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .fallback-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+    </style>
 </head>
 <body>
-    <!-- Reading Progress -->
-    <div class="progress-bar" aria-hidden="true">
-        <div class="progress-bar__fill" id="progress-fill"></div>
+    <div class="loader-container">
+        <div class="loader"></div>
+        <div class="loader-text">Loading Your CV</div>
+        <div class="loader-subtext">Selecting a random template...</div>
+        
+        <div class="fallback">
+            <div class="fallback-title">Or choose a template:</div>
+            <div class="fallback-links">
+                <a href="./templates/index.html" class="fallback-link">View All Templates</a>
+            </div>
+        </div>
     </div>
 
-    <!-- Background -->
-    <div class="bg-gradient" aria-hidden="true"></div>
-
-    <!-- Navigation -->
-    <header class="nav" id="navbar">
-        <div class="nav__inner">
-            <a href="#home" class="nav__logo"></a>
-
-            <ul class="nav__menu" id="nav-menu" role="menubar">
-                <li role="none"><a href="#home" class="nav__link" role="menuitem">Home</a></li>
-                <li role="none"><a href="#about" class="nav__link" role="menuitem">About</a></li>
-                <li role="none"><a href="#experience" class="nav__link" role="menuitem">Experience</a></li>
-                <li role="none"><a href="#capabilities" class="nav__link" role="menuitem">Capabilities</a></li>
-                <li role="none"><a href="#certifications" class="nav__link" role="menuitem">Credentials</a></li>
-                <li role="none"><a href="#insights" class="nav__link" role="menuitem">Insights</a></li>
-                <li role="none"><a href="#contact" class="nav__link" role="menuitem">Contact</a></li>
-            </ul>
-
-            <div class="nav__controls">
-                <button class="nav__theme-btn" id="theme-toggle" aria-label="Toggle theme">
-                    <svg class="icon icon--sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
-                    <svg class="icon icon--moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                </button>
-                <button class="nav__hamburger" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
-                    <span class="nav__bar"></span>
-                    <span class="nav__bar"></span>
-                    <span class="nav__bar"></span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <main>
-        <!-- ===== HERO ===== -->
-        <section id="home" class="hero section" aria-label="Introduction">
-            <div class="hero__inner container">
-                <div class="hero__content">
-                    <p class="hero__eyebrow"><span class="hero__eyebrow-bar" aria-hidden="true"></span></p>
-                    <h1 class="hero__title"></h1>
-                    <p class="hero__summary"></p>
-                    <div class="hero__actions">
-                        <a href="" class="btn btn--primary" download>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            Download CV
-                        </a>
-                        <a href="#contact" class="btn btn--ghost">Get in Touch</a>
-                    </div>
-                    <div class="hero__socials">
-                        <!-- Social links will be rendered here -->
-                    </div>
-                </div>
-
-                <div class="hero__visual">
-                    <div class="hero__profile-ring">
-                        <img src="" alt="" class="hero__profile-img" loading="eager" fetchpriority="high" decoding="async">
-                    </div>
-                </div>
-            </div>
-
-            <div class="hero__stats container">
-                <!-- Stats will be rendered here -->
-            </div>
-        </section>
-
-        <!-- ===== ABOUT ===== -->
-        <section id="about" class="section" aria-label="About">
-            <div class="container">
-                <div class="section__header">
-                    <span class="section__eyebrow"></span>
-                    <h2 class="section__title"></h2>
-                </div>
-
-                <div class="section__content about__layout">
-                    <div class="about__narrative">
-                        <!-- About narrative will be rendered here -->
-                    </div>
-
-                    <div class="about__highlights">
-                        <!-- About highlights will be rendered here -->
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== EXPERIENCE ===== -->
-        <section id="experience" class="section section--alt" aria-label="Experience">
-            <div class="container">
-                <div class="section__header">
-                    <span class="section__eyebrow">Career Timeline</span>
-                    <h2 class="section__title">Leadership Journey</h2>
-                    <p class="section__subtitle">15+ years across fintech, data science, and enterprise platforms</p>
-                </div>
-
-                <div class="timeline">
-                    <!-- Experience timeline will be rendered here -->
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== CAPABILITIES ===== -->
-        <section id="capabilities" class="section" aria-label="Capabilities">
-            <div class="container">
-                <div class="section__header">
-                    <span class="section__eyebrow">Core Competencies</span>
-                    <h2 class="section__title">Capability Clusters</h2>
-                    <p class="section__subtitle">Strategic depth across engineering, architecture, and technology leadership</p>
-                </div>
-
-                <div class="capability-grid">
-                    <!-- Capability cards will be rendered here -->
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== CERTIFICATIONS ===== -->
-        <section id="certifications" class="section section--alt" aria-label="Certifications and Education">
-            <div class="container">
-                <div class="section__header">
-                    <span class="section__eyebrow">Credentials</span>
-                    <h2 class="section__title">Certifications & Education</h2>
-                    <p class="section__subtitle">Continuous learning as a leadership discipline</p>
-                </div>
-
-                <div class="cert-grid">
-                    <!-- Certifications will be rendered here -->
-                </div>
-
-                <div class="education">
-                    <h3 class="education__heading">Education</h3>
-                    <div class="education__items">
-                        <!-- Education items will be rendered here -->
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== INSIGHTS ===== -->
-        <section id="insights" class="section" aria-label="Engineering Insights">
-            <div class="container">
-                <div class="section__header">
-                    <span class="section__eyebrow">Thought Leadership</span>
-                    <h2 class="section__title">Engineering Insights</h2>
-                    <p class="section__subtitle">Writing on fintech architecture, platform engineering, and AI at scale</p>
-                </div>
-
-                <div class="blog-grid">
-                    <!-- Blog/insight cards will be rendered here -->
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== CONTACT ===== -->
-        <section id="contact" class="section section--alt" aria-label="Contact">
-            <div class="container">
-                <div class="section__header">
-                    <span class="section__eyebrow"></span>
-                    <h2 class="section__title"></h2>
-                    <p class="section__subtitle"></p>
-                </div>
-
-                <div class="contact__layout">
-
-                    <div class="contact__info">
-                        <div class="contact__card card">
-                            <h3 class="contact__card-title">Direct Contact</h3>
-                            <div class="contact__details">
-                                <!-- Contact details will be rendered here -->
-                            </div>
-                        </div>
-
-                        <div class="contact__card contact__card--accent card">
-                            <p class="contact__quote"></p>
-                            <div class="contact__availability">
-                                <span class="contact__availability-dot" aria-hidden="true"></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <form class="contact__form card" id="contact-form" novalidate>
-                        <!-- Contact form will be rendered here -->
-                    </form>
-
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- ===== FOOTER ===== -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer__inner">
-                <div class="footer__brand">
-                    <span class="footer__logo"></span>
-                    <p class="footer__tagline"></p>
-                </div>
-                <nav class="footer__nav" aria-label="Footer navigation">
-                    <a href="#about" class="footer__link">About</a>
-                    <a href="#experience" class="footer__link">Experience</a>
-                    <a href="#capabilities" class="footer__link">Capabilities</a>
-                    <a href="https://rkoots.github.io/blog/" target="_blank" rel="noopener noreferrer" class="footer__link">Blog</a>
-                    <a href="#contact" class="footer__link">Contact</a>
-                </nav>
-                <div class="footer__socials">
-                    <!-- Footer social links will be rendered here -->
-                </div>
-            </div>
-            <div class="footer__bottom">
-                <p>&copy; <span id="current-year"></span> Rajkumar Venkataraman. Chennai, India.</p>
-                <a href="https://rkoots.github.io/terms/" class="footer__link footer__link--muted">Terms &amp; Privacy</a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scroll to Top -->
-    <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="18 15 12 9 6 15"></polyline></svg>
-    </button>
-
-    <!-- JavaScript -->
     <script>
-        // Inline CV data to avoid network loading issues
-        window.cvData = {"meta":{"version":"1.0.1","lastUpdated":"2025-01-14","template":"professional-portfolio"},"personalInfo":{"name":{"first":"Rajkumar","last":"Venkataraman","full":"Rajkumar Venkataraman","display":"Rajkumar<br><span class=\"hero__title-accent\">Venkataraman</span>"},"title":"Director of Product Engineering","tagline":"Engineering executive with 15+ years architecting fintech platforms at scale — from credit risk infrastructure and lending systems to AI-driven data products. I build the teams, the culture, and the technology that powers financial outcomes.","profileImage":"/assets/img/profile.png","location":{"city":"Chennai","country":"India","display":"Chennai, India (Remote-Ready)"},"email":"rajkumarv88@outlook.com","phone":null,"website":"https://rkoots.github.io/","resumeDownload":"/assets/pdf/Rajkumar_V_2023_D.pdf"},"socialLinks":[{"platform":"linkedin","url":"https://www.linkedin.com/in/rkoots/","username":"rkoots","display":"linkedin.com/in/rkoots"},{"platform":"github","url":"https://github.com/rkoots/","username":"rkoots","display":"github.com/rkoots"},{"platform":"twitter","url":"https://x.com/rkoots","username":"rkoots","display":"@rkoots"},{"platform":"devto","url":"https://dev.to/rkoots","username":"rkoots","display":"dev.to/rkoots"}],"stats":[{"value":"15+","label":"Years Experience","count":15,"suffix":"+"},{"value":"70+","label":"Engineers Led","count":70,"suffix":"+"},{"value":"10+","label":"Products Delivered","count":10,"suffix":"+"},{"value":"5+","label":"Technology Teams Managed","count":5,"suffix":"+"}],"about":{"eyebrow":"Leadership Profile","title":"Engineering at Scale,<br>Purpose-Driven","narrative":["I don't just ship software — I build the systems, teams, and culture that allow organisations to compete at scale in fintech. Over 15 years, I've moved from hands-on engineering to executive leadership, accumulating deep expertise across product architecture, distributed systems, and financial services technology.","At ADF Data Science, I lead a distributed organisation of 70+ engineers across product, platform, and data engineering. My focus is on translating business ambition into executable technical strategy — reducing time-to-market, improving reliability, and building teams that can operate at enterprise scale without losing product agility.","My background spans the full lending lifecycle: origination, credit scoring, risk analytics, collections, and regulatory reporting. I understand fintech not just as a domain but as a set of constraints that demand both engineering rigour and product empathy."],"highlights":[{"title":"Team Architecture","description":"Built and scaled engineering organisations from seed to 70+ — across India and remote globally. Structured hiring, levelling, and career frameworks from scratch.","icon":"users"},{"title":"Platform Architecture","description":"Designed multi-tenant lending platforms, credit decisioning engines, and real-time analytics pipelines handling millions of transactions in regulated environments.","icon":"monitor"},{"title":"DevOps Transformation","description":"Led cloud-native migration and CI/CD adoption reducing deployment cycles by 70% and achieving 99.9% SLA across production fintech workloads.","icon":"activity"},{"title":"Fintech Domain Depth","description":"15+ years in lending, credit risk, and financial data systems — from scorecard design to regulatory compliance architecture in high-volume consumer finance.","icon":"clock"}]},"experience":[{"id":"adf-data-science","company":{"name":"ADF Data Science Pvt Ltd","logo":"/assets/img/ADF_logo.png","website":"https://adfdatascience.com"},"roles":[{"position":"Director of Product Engineering","period":{"start":"2023-04","end":"present","display":"Apr 2023 – Present"},"summary":"Executive engineering leadership for a fintech-focused data science organisation. Accountable for product engineering strategy, platform architecture, and org-wide engineering culture across lending, analytics, and AI product lines.","achievements":[{"title":"Strategic Leadership:","description":"Leading strategic engineering initiatives in a high-scale fintech environment, driving product roadmaps, architecture decisions, and team alignment with business goals."},{"title":"Cross-functional Collaboration:","description":"Collaborating cross-functionally with product, QA, and design to deliver scalable solutions while ensuring CI/CD pipelines, DevOps culture, and best coding practices across teams."},{"title":"Innovation & Technology:","description":"Championing continuous improvement and emerging tech evaluation, ensuring the organisation stays at the forefront of fintech innovation."}],"skills":["Executive Leadership","Product Strategy","Architecture Governance","DevOps Culture","Team Building"]},{"position":"Senior Manager – Product Engineering","period":{"start":"2022-01","end":"2023-03","display":"Jan 2022 – Mar 2023"},"summary":"Managed delivery of Python/Django, Java, AngularJS-based systems for a US lending client while leading 70+ engineers across product and platform teams.","achievements":[{"title":"Team Leadership:","description":"Led 70+ engineers across product and platform teams, ensuring high-quality delivery and professional growth."},{"title":"DevOps Integration:","description":"Integrated DevOps automation using Jenkins, Docker, Kubernetes, and Ansible, significantly improving deployment efficiency."},{"title":"Architecture Excellence:","description":"Introduced scalable architectural patterns and improved engineering KPIs, resulting in better system performance and maintainability."}],"skills":["Team Management","DevOps","Python/Django","Java","AngularJS","Kubernetes"]},{"position":"Manager – Software","period":{"start":"2021-04","end":"2021-12","display":"Apr 2021 – Dec 2021"},"summary":"Led the Tools & Automation team focusing on RPA and platform services, overseeing delivery, DevOps practices, and code quality initiatives.","achievements":[{"title":"RPA & Automation:","description":"Led the Tools & Automation team focusing on Robotic Process Automation and platform services."},{"title":"Quality Assurance:","description":"Oversaw delivery, DevOps practices, and adoption of SonarQube for code quality, ensuring high standards across all projects."},{"title":"Process Improvement:","description":"Contributed to robust problem-solving and continuous integration pipelines, streamlining development workflows."}],"skills":["RPA","Process Automation","SonarQube","DevOps","Team Leadership"]},{"position":"Engineering Manager – Technology","period":{"start":"2020-04","end":"2021-03","display":"Apr 2020 – Mar 2021"},"summary":"Delivered tech roadmap execution aligned with sprint planning while coaching and mentoring high-performing teams.","achievements":[{"title":"Roadmap Execution:","description":"Delivered tech roadmap execution aligned with sprint planning, ensuring timely delivery of strategic initiatives."},{"title":"Team Development:","description":"Coached and mentored high-performing teams, emphasizing engineering excellence and continuous improvement."}],"skills":["Roadmap Planning","Team Mentoring","Engineering Excellence","Agile/Scrum"]},{"position":"Assistant Engineering Manager – Tech Operations","period":{"start":"2018-04","end":"2020-03","display":"Apr 2018 – Mar 2020"},"summary":"Strengthened ops-tech synergy through automation and DevOps practices, improving efficiency across the technology stack.","achievements":[{"title":"Operations Integration:","description":"Strengthened ops-tech synergy through automation and DevOps, bridging the gap between development and operations."},{"title":"Technology Modernization:","description":"Improved efficiency by integrating Jenkins, Docker, and Kubernetes practices, modernizing the deployment pipeline."}],"skills":["DevOps","Jenkins","Docker","Kubernetes","Operations Management"]},{"position":"Senior Tech Lead","period":{"start":"2016-04","end":"2018-03","display":"Apr 2016 – Mar 2018"},"summary":"Guided teams on scalable backend systems, mentored junior engineers, and contributed to solutioning and architectural reviews.","achievements":[{"title":"Technical Leadership:","description":"Guided teams on scalable backend systems, providing technical direction and architectural guidance."},{"title":"Mentorship:","description":"Mentored junior engineers, fostering their professional growth and technical skill development."},{"title":"Architecture Review:","description":"Contributed to solutioning and architectural reviews, ensuring robust and scalable system designs."}],"skills":["Backend Architecture","Mentoring","System Design","Technical Leadership"]},{"position":"Senior Software Engineer","period":{"start":"2015-10","end":"2016-03","display":"Oct 2015 – Mar 2016"},"summary":"Led sprint planning with US teams, built high-performance APIs, and ensured code quality across development projects.","achievements":[{"title":"API Development:","description":"Built high-performance APIs with strong focus on scalability, security, and maintainability."},{"title":"Sprint Leadership:","description":"Led sprint planning with US teams, coordinating cross-functional development efforts."},{"title":"Code Quality:","description":"Ensured code quality through reviews, testing, and adherence to best practices."}],"skills":["API Development","Sprint Planning","Code Quality","Agile Methodologies"]}],"location":"Chennai, India (Remote)","current":true,"companySummary":"Leading fintech data science organisation specializing in lending platforms, credit risk analytics, and AI-driven financial products.","overallSkills":["Fintech","Lending Systems","AWS","Kubernetes","ML Ops","Engineering Leadership","Python","Java","DevOps"]},{"id":"gain-credit","company":{"name":"Gain Credit (formerly Global Analytics)","logo":"/assets/img/GA.png","website":null},"position":"Senior Technology Operation Engineer (DevOps)","period":{"start":"2012-03","end":"2015-10","display":"Mar 2012 – Oct 2015"},"location":null,"current":false,"summary":"Senior Operations Engineer responsible for infrastructure automation, CI/CD pipelines, and systems reliability for lending management platforms. Drove automation initiatives that streamlined operations and enhanced system performance.","achievements":[{"title":"Automation Excellence:","description":"Automated LMS batch systems and financial reporting pipelines, reducing manual processing time by 80% and improving data accuracy."},{"title":"CI/CD Implementation:","description":"Built comprehensive Jenkins pipelines for automated testing, deployment, and payouts — enabling daily releases with zero-downtime deployments."},{"title":"Database Optimisation:","description":"Enhanced MySQL performance through query optimisation, indexing strategies, and replication setup — supporting 10x transaction volume growth."},{"title":"Infrastructure as Code:","description":"Implemented configuration management and monitoring solutions, improving system reliability to 99.95% uptime."}],"skills":["DevOps","Jenkins","MySQL","Automation","CI/CD","Infrastructure"]},{"id":"energica-aspl","company":{"name":"Energica ASPL","logo":"/assets/img/Energica_Final_Logo.png","website":null},"position":"Software Engineer","period":{"start":"2010-07","end":"2012-03","display":"Jul 2010 – Mar 2012"},"location":null,"current":false,"summary":"Software Engineer focused on Python development, REST API design, and automation solutions. Built invoice processing systems and analytics platforms that drove digital transformation for enterprise clients.","achievements":[{"title":"API Development:","description":"Designed and implemented RESTful APIs for invoice automation, processing 50K+ invoices monthly with 99.8% accuracy."},{"title":"Analytics Platform:","description":"Built Python-based analytics engine providing real-time insights on invoice data, reducing reporting time from hours to minutes."},{"title":"OCR Integration:","description":"Implemented OCR conversion systems for digitising paper invoices, achieving 95% accuracy in automated data extraction."},{"title":"Digital Transformation:","description":"Contributed to end-to-end digital transformation projects, helping clients reduce manual processing costs by 60%."}],"skills":["Python","REST APIs","OCR","Automation","Analytics","Digital Transformation"]}],"capabilities":[{"title":"Engineering Leadership","description":"Leading, scaling and structuring high-performing distributed engineering organisations.","icon":"users","skills":["Engineering Org Design & Scaling","Career Ladders & Performance Frameworks","Distributed Team Management","Technical Hiring & Onboarding","OKR Alignment & Delivery Planning","Cross-functional Stakeholder Management"]},{"title":"Architecture & Scalability","description":"Designing systems that scale reliably under financial-grade workload and compliance demands.","icon":"grid","skills":["Microservices & Event-Driven Architecture","Distributed Systems Design","Multi-tenant Platform Engineering","API Design & Integration Architecture","Domain-Driven Design (DDD)","High-Availability & Fault Tolerance"]},{"title":"Cloud & DevOps","description":"End-to-end cloud transformation and DevOps culture adoption in regulated fintech environments.","icon":"activity","skills":["AWS (EC2, EKS, RDS, Lambda, S3)","Azure (AKS, Pipelines, DevOps)","Kubernetes & Docker Orchestration","CI/CD — GitHub Actions, Jenkins, ArgoCD","Infrastructure as Code (Terraform)","Observability — Prometheus, Grafana, ELK"]},{"title":"AI & Automation","description":"Applied machine learning for fintech use cases — from credit risk to intelligent automation.","icon":"layers","skills":["ML Model Development & ML Ops","Credit Scorecard & Risk Modelling","Python, XGBoost, Scikit-learn, TensorFlow","LLM Integration & Generative AI Products","Feature Engineering & Data Pipelines","Fraud Detection & Anomaly Systems"]},{"title":"Product & Agile","description":"Product-aligned engineering delivery with lean, iterative execution and business impact focus.","icon":"git-branch","skills":["Product Roadmap Strategy","Agile / Scrum at Scale (SAFe)","Sprint Planning & Velocity Management","Technical Debt Governance","Lean Six Sigma Process Optimisation","Engineering KPIs & DORA Metrics"]},{"title":"Fintech Domain","description":"Deep domain expertise across the full financial services technology stack.","icon":"bar-chart","skills":["Lending Origination & Servicing Platforms","Credit Risk & Bureau Integrations","Regulatory Compliance (RBI, GDPR)","Payment Rails & Reconciliation","Collections & Delinquency Management","Financial Data Warehousing"]}],"certifications":[{"title":"Lean Six Sigma Green Belt","issuer":"Benchmark Six Sigma","description":"Applied process optimisation and continuous improvement methodologies across engineering delivery pipelines.","badge":"green","licenseNumber":"42437509","issueDate":"2021-11","expirationDate":null,"verificationUrl":"https://certificates.benchmarksixsigma.com/84b45d74-7a02-4bd1-afaf-bc4cc6a84d4c#acc.mj35714a"},{"title":"Advanced Artificial Intelligence","issuer":"AI Specialisation Program","description":"Advanced coursework in machine learning, deep learning, and applied AI system design for production environments.","badge":"blue","licenseNumber":"18331918806","issueDate":"2022-06","expirationDate":null,"verificationUrl":"https://www.linkedin.com/in/rkoots/details/certifications/1718201709135/single-media-viewer/?type=IMAGE&profileId=ACoAACImIIAB6s16Z0TBsxdB64-CBHk4hlNorZE"},{"title":"Principles of Management","issuer":"Great Learning","description":"Management fundamentals course covering planning, organizing, leading, and controlling functions with focus on decision-making and strategy formulation.","badge":"purple","licenseNumber":"FOUEAAOV","issueDate":"2021-10","expirationDate":null,"verificationUrl":"https://olympus1.greatlearning.in/course_certificate/FOUEAAOV"},{"title":"Agile Scrum Master","issuer":"Master of Project Academy","description":"Certified Scrum Master with hands-on experience facilitating Agile transformation at team and department scale.","badge":"orange","licenseNumber":"cert_mnvq08nx","issueDate":"2017-06","expirationDate":null,"verificationUrl":"http://rajkumarv.125mb.com/certifi/cert_mnvq08nx.JPG"},{"title":"System Integration Training","issuer":"CMC Limited (TATA)","description":"Intensive system integration training covering Linux, SQL, data structures, .Net, and Python for enterprise applications.","badge":"teal","licenseNumber":null,"issueDate":"2012-04","expirationDate":null,"verificationUrl":null},{"title":".NET Programming","issuer":"Microsoft Technology Certification","description":"Certified proficiency in .NET ecosystem including C#, ASP.NET, and enterprise application architecture patterns.","badge":"teal","licenseNumber":null,"issueDate":"2011-03","expirationDate":null,"verificationUrl":null}],"education":[{"degree":"Bachelor of Engineering","field":"Computer Science & Engineering","institution":"Visvesvaraya Technological University (VTU), Bangalore","period":"2006 - 2010","type":"undergraduate","description":"Bachelor degree in Computer Science and Engineering with focus on software development, algorithms, and system design."},{"degree":"12th Grade","field":"Science with Computer Science","institution":"Kendriya Vidyalaya, Bangalore","period":"2006","type":"high_school","description":"12th standard with major in science and computers from Kendriya Vidyalaya, Bangalore."},{"degree":"10th Grade","field":"General Education","institution":"Kendriya Vidyalaya, New Delhi","period":"2004","type":"secondary","description":"10th standard from Kendriya Vidyalaya, New Delhi."}],"insights":[{"title":"Platform Engineering News & Analysis","description":"Curated signals from the world of fintech infrastructure, cloud-native platforms, and distributed system design.","category":"Engineering Insights","url":"https://rkoots.github.io/technews/","badge":"blue"},{"title":"AI & Fintech Perspectives","description":"Quick-reference guides and deep dives into applying generative AI, ML models, and intelligent automation in financial services.","category":"AI & Fintech","url":"https://rkoots.github.io/quickref/","badge":"purple"},{"title":"DevOps & Platform Playbooks","description":"Practical runbooks, architectural patterns, and lessons learned building and scaling cloud-native fintech platforms.","category":"DevOps & Platform","url":"https://rkoots.github.io/blog/","badge":"green"},{"title":"Engineering Standards & Style","description":"Opinionated guides on engineering craft — code standards, API design, documentation, and the culture of technical excellence.","category":"Standards & Craft","url":"https://rkoots.github.io/styleguide/","badge":"orange"}],"contact":{"eyebrow":"Let's Connect","title":"Get In Touch","subtitle":"Open to leadership opportunities, advisory engagements, and fintech architecture conversations","quote":"The best engineering leaders I know spend as much time thinking about the organisation as they do about the architecture.","availability":"Available for senior leadership discussions","form":{"fields":[{"name":"name","label":"Full Name","type":"text","placeholder":"Your name","required":true,"autocomplete":"name"},{"name":"email","label":"Email Address","type":"email","placeholder":"you@company.com","required":true,"autocomplete":"email"},{"name":"subject","label":"Subject","type":"select","options":[{"value":"","text":"Select a topic"},{"value":"leadership","text":"Leadership Opportunity"},{"value":"advisory","text":"Advisory / Consulting"},{"value":"architecture","text":"Architecture Discussion"},{"value":"speaking","text":"Speaking Engagement"},{"value":"other","text":"Other"}],"required":false},{"name":"message","label":"Message","type":"textarea","placeholder":"Tell me about the opportunity or question...","required":true,"rows":5}]}},"seo":{"title":"Rajkumar Venkataraman — Director of Product Engineering | Fintech & AI Platform Leader","description":"Rajkumar Venkataraman — Director of Product Engineering with 15+ years architecting scalable fintech platforms, leading distributed engineering organisations, and driving AI-powered product strategy. RKoots Engineering Leadership.","keywords":"Director of Engineering, Technology Leader, Engineering Leadership, Python Architect, Java Backend Expert, AI-Driven Systems, Scalable Architecture, Cloud Engineering, DevOps Strategy, Digital Transformation, RKoots, RKoots Technology Leadership, RKoots Engineering Strategy, RKoots Platform Architecture, Fintech Engineering, Lending Platform","author":"Rajkumar Venkataraman","image":"https://rkoots.github.io/assets/img/profile.png"}};
+        (function() {
+            const templates = ['modern', 'classic', 'glass', 'animated', 'minimalist', 'default'];
+            const randomIndex = Math.floor(Math.random() * templates.length);
+            const selectedTemplate = templates[randomIndex];
+            
+            // Redirect to random template after a brief delay for visual feedback
+            setTimeout(() => {
+                window.location.href = `./templates/${selectedTemplate}/index.html`;
+            }, 500);
+        })();
     </script>
-    <script src="/assets/js/script.js"></script>
-    <script src="/assets/js/cv-renderer.js"></script>
 </body>
 </html>
