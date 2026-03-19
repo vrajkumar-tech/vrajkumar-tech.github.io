@@ -28,7 +28,7 @@ User-agent: DuckDuckBot
 Allow: /
 
 # Sitemap location
-Sitemap: https://vrajkumar-tech.github.io/sitemap.xml
+Sitemap: https://rajkumar.is-a.dev/sitemap.xml
 
 # Crawl delay for other bots (in seconds)
 Crawl-delay: 1

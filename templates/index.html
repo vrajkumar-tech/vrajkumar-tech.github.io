@@ -7,15 +7,15 @@
     <meta name="keywords" content="CV Templates, Resume Templates, Professional CV, Engineering CV, Fintech Resume, Career Portfolio, Interactive CV, Modern Resume">
     <meta name="author" content="Rajkumar Venkataraman">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-    <link rel="canonical" href="https://vrajkumar-tech.github.io/templates/">
+    <link rel="canonical" href="">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://vrajkumar-tech.github.io/templates/">
+    <meta property="og:url" content="">
     <meta property="og:site_name" content="Rajkumar Venkataraman">
     <meta property="og:title" content="CV Templates - Choose Your Style">
     <meta property="og:description" content="Choose from 6 professional CV templates to showcase your engineering leadership and fintech expertise.">
-    <meta property="og:image" content="https://vrajkumar-tech.github.io/assets/img/profile.png">
+    <meta property="og:image" content="">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:locale" content="en_IN">
@@ -26,7 +26,7 @@
     <meta name="twitter:creator" content="@rkoots">
     <meta name="twitter:title" content="CV Templates - Choose Your Style">
     <meta name="twitter:description" content="Choose from 6 professional CV templates to showcase your expertise.">
-    <meta name="twitter:image" content="https://vrajkumar-tech.github.io/assets/img/profile.png">
+    <meta name="twitter:image" content="">
     
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -34,12 +34,12 @@
       "@context": "https://schema.org",
       "@type": "WebPage",
       "name": "CV Templates",
-      "url": "https://vrajkumar-tech.github.io/templates/",
+      "url": "",
       "description": "Choose from 6 professional CV templates to showcase your engineering leadership and fintech expertise.",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Rajkumar Venkataraman",
-        "url": "https://vrajkumar-tech.github.io"
+        "url": ""
       }
     }
     </script>
@@ -466,5 +466,21 @@
             </p>
         </footer>
     </div>
+    
+    <script>
+        // Dynamically set URLs based on current hostname
+        const baseUrl = window.location.origin;
+        const currentPath = window.location.pathname;
+        document.querySelector('link[rel="canonical"]').href = baseUrl + currentPath;
+        document.querySelector('meta[property="og:url"]').content = baseUrl + currentPath;
+        document.querySelector('meta[property="og:image"]').content = baseUrl + '/assets/img/profile.png';
+        document.querySelector('meta[name="twitter:image"]').content = baseUrl + '/assets/img/profile.png';
+        
+        const structuredData = document.querySelector('script[type="application/ld+json"]');
+        const jsonData = JSON.parse(structuredData.textContent);
+        jsonData.url = baseUrl + currentPath;
+        jsonData.isPartOf.url = baseUrl;
+        structuredData.textContent = JSON.stringify(jsonData, null, 2);
+    </script>
 </body>
 </html>
