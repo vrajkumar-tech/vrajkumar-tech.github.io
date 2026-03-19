@@ -165,7 +165,17 @@
         <div class="fallback">
             <div class="fallback-title">Or choose a template:</div>
             <div class="fallback-links">
-                <a href="./templates/index.html" class="fallback-link">View All Templates</a>
+                <a href="./templates/animated/index.html" class="fallback-link">Animated</a>
+                <a href="./templates/classic/index.html" class="fallback-link">Classic</a>
+                <a href="./templates/default/index.html" class="fallback-link">Default</a>
+                <a href="./templates/glass/index.html" class="fallback-link">Glass</a>
+                <a href="./templates/gradient-flow/index.html" class="fallback-link">Gradient Flow</a>
+                <a href="./templates/minimalist/index.html" class="fallback-link">Minimalist</a>
+                <a href="./templates/modern/index.html" class="fallback-link">Modern</a>
+                <a href="./templates/neon/index.html" class="fallback-link">Neon</a>
+                <a href="./templates/parallax/index.html" class="fallback-link">Parallax</a>
+                <a href="./templates/particle/index.html" class="fallback-link">Particle</a>
+                <a href="./templates/index.html" class="fallback-link" style="margin-top: 0.5rem; background: rgba(255,255,255,0.2);">View All Templates</a>
             </div>
         </div>
     </div>
@@ -196,7 +206,7 @@
             structuredData.textContent = JSON.stringify(jsonData, null, 2);
             
             // Random template redirect
-            const templates = ['modern', 'classic', 'glass', 'animated', 'minimalist', 'default', 'neon', 'parallax', 'particle', 'gradient-flow'];
+            const templates = ['animated', 'classic', 'default', 'glass', 'gradient-flow', 'minimalist', 'modern', 'neon', 'parallax', 'particle'];
             const randomIndex = Math.floor(Math.random() * templates.length);
             const selectedTemplate = templates[randomIndex];
             
