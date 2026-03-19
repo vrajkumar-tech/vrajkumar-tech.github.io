@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            text-align: center;
+            padding: 2rem;
+            max-width: 500px;
+        }
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid white;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .error {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        a {
+            color: #fff;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="spinner"></div>
+        <h1>Redirecting...</h1>
+        <p id="status">Checking sitemap...</p>
+    </div>
+
+    <script>
+        /**
+         * Production-Ready Sitemap-Based Redirect Handler
+         * 
+         * Purpose: Redirect /rkoots/* paths to https://rkoots.github.io/*
+         * Only redirects if the target URL exists in the sitemap
+         * 
+         * Flow:
+         * 1. Extract the path after /rkoots/
+         * 2. Fetch and parse sitemap.xml (with caching)
+         * 3. Check if target URL exists in sitemap
+         * 4. Redirect if valid, show error if not
+         */
+
+        (function() {
+            'use strict';
+
+            // Configuration
+            const CONFIG = {
+                SITEMAP_URL: 'https://rkoots.github.io/sitemap.xml',
+                TARGET_DOMAIN: 'https://rkoots.github.io',
+                CACHE_KEY: 'sitemap_urls_cache',
+                CACHE_DURATION: 3600000, // 1 hour in milliseconds
+                FETCH_TIMEOUT: 5000 // 5 seconds
+            };
+
+            // DOM elements
+            const statusEl = document.getElementById('status');
+
+            /**
+             * Update status message
+             */
+            function updateStatus(message, isError = false) {
+                if (statusEl) {
+                    statusEl.textContent = message;
+                    if (isError) {
+                        statusEl.parentElement.innerHTML += `<div class="error">${message}</div>`;
+                    }
+                }
+            }
+
+            /**
+             * Get cached sitemap URLs if still valid
+             */
+            function getCachedUrls() {
+                try {
+                    const cached = localStorage.getItem(CONFIG.CACHE_KEY);
+                    if (!cached) return null;
+
+                    const { urls, timestamp } = JSON.parse(cached);
+                    const now = Date.now();
+
+                    // Check if cache is still valid
+                    if (now - timestamp < CONFIG.CACHE_DURATION) {
+                        return urls;
+                    }
+
+                    // Cache expired
+                    localStorage.removeItem(CONFIG.CACHE_KEY);
+                    return null;
+                } catch (error) {
+                    console.warn('Cache read error:', error);
+                    return null;
+                }
+            }
+
+            /**
+             * Cache sitemap URLs
+             */
+            function cacheUrls(urls) {
+                try {
+                    const cacheData = {
+                        urls: urls,
+                        timestamp: Date.now()
+                    };
+                    localStorage.setItem(CONFIG.CACHE_KEY, JSON.stringify(cacheData));
+                } catch (error) {
+                    console.warn('Cache write error:', error);
+                }
+            }
+
+            /**
+             * Fetch sitemap with timeout
+             */
+            function fetchWithTimeout(url, timeout) {
+                return Promise.race([
+                    fetch(url),
+                    new Promise((_, reject) =>
+                        setTimeout(() => reject(new Error('Fetch timeout')), timeout)
+                    )
+                ]);
+            }
+
+            /**
+             * Parse XML sitemap and extract URLs
+             */
+            function parseSitemap(xmlText) {
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+
+                // Check for parsing errors
+                const parserError = xmlDoc.querySelector('parsererror');
+                if (parserError) {
+                    throw new Error('XML parsing failed');
+                }
+
+                // Extract all <loc> elements
+                const locElements = xmlDoc.getElementsByTagName('loc');
+                const urls = new Set();
+
+                for (let i = 0; i < locElements.length; i++) {
+                    const url = locElements[i].textContent.trim();
+                    if (url) {
+                        urls.add(url);
+                    }
+                }
+
+                return Array.from(urls);
+            }
+
+            /**
+             * Fetch and parse sitemap
+             */
+            async function fetchSitemap() {
+                // Try cache first
+                const cachedUrls = getCachedUrls();
+                if (cachedUrls) {
+                    console.log('Using cached sitemap URLs');
+                    return cachedUrls;
+                }
+
+                updateStatus('Fetching sitemap...');
+
+                try {
+                    const response = await fetchWithTimeout(
+                        CONFIG.SITEMAP_URL,
+                        CONFIG.FETCH_TIMEOUT
+                    );
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+
+                    const xmlText = await response.text();
+                    const urls = parseSitemap(xmlText);
+
+                    if (urls.length === 0) {
+                        throw new Error('No URLs found in sitemap');
+                    }
+
+                    // Cache the results
+                    cacheUrls(urls);
+
+                    console.log(`Loaded ${urls.length} URLs from sitemap`);
+                    return urls;
+
+                } catch (error) {
+                    console.error('Sitemap fetch error:', error);
+                    throw error;
+                }
+            }
+
+            /**
+             * Extract the path after /rkoots/
+             */
+            function extractTargetPath() {
+                const currentPath = window.location.pathname;
+                const rkootsIndex = currentPath.indexOf('/rkoots/');
+
+                if (rkootsIndex === -1) {
+                    return null;
+                }
+
+                // Get everything after /rkoots/
+                return currentPath.substring(rkootsIndex + '/rkoots/'.length);
+            }
+
+            /**
+             * Build target URL from extracted path
+             */
+            function buildTargetUrl(path) {
+                // Normalize path (remove leading slash if present)
+                const normalizedPath = path.startsWith('/') ? path.substring(1) : path;
+                
+                // Build full URL
+                const targetUrl = `${CONFIG.TARGET_DOMAIN}/${normalizedPath}`;
+                
+                // Add query parameters if present
+                const queryString = window.location.search;
+                const hash = window.location.hash;
+                
+                return targetUrl + queryString + hash;
+            }
+
+            /**
+             * Check if URL exists in sitemap
+             */
+            function urlExistsInSitemap(targetUrl, sitemapUrls) {
+                // Remove query params and hash for comparison
+                const baseUrl = targetUrl.split('?')[0].split('#')[0];
+                
+                // Check exact match
+                if (sitemapUrls.includes(baseUrl)) {
+                    return true;
+                }
+
+                // Check with trailing slash
+                if (sitemapUrls.includes(baseUrl + '/')) {
+                    return true;
+                }
+
+                // Check without trailing slash
+                if (baseUrl.endsWith('/') && sitemapUrls.includes(baseUrl.slice(0, -1))) {
+                    return true;
+                }
+
+                return false;
+            }
+
+            /**
+             * Perform the redirect
+             */
+            function performRedirect(targetUrl) {
+                updateStatus(`Redirecting to ${targetUrl}...`);
+                console.log('Redirecting to:', targetUrl);
+                
+                // Use replace to avoid adding to browser history
+                window.location.replace(targetUrl);
+            }
+
+            /**
+             * Show error message
+             */
+            function showError(message, targetUrl = null) {
+                console.error(message);
+                
+                let errorHtml = `
+                    <h1>⚠️ Redirect Failed</h1>
+                    <p>${message}</p>
+                `;
+
+                if (targetUrl) {
+                    errorHtml += `
+                        <p>Target URL: <a href="${targetUrl}">${targetUrl}</a></p>
+                        <p>This URL was not found in the sitemap.</p>
+                    `;
+                }
+
+                errorHtml += `
+                    <p><a href="${CONFIG.TARGET_DOMAIN}">Go to homepage</a></p>
+                `;
+
+                document.querySelector('.container').innerHTML = errorHtml;
+            }
+
+            /**
+             * Main redirect logic
+             */
+            async function handleRedirect() {
+                try {
+                    // Extract target path
+                    const targetPath = extractTargetPath();
+                    
+                    if (!targetPath) {
+                        showError('Invalid /rkoots/ path');
+                        return;
+                    }
+
+                    // Build target URL
+                    const targetUrl = buildTargetUrl(targetPath);
+                    console.log('Target URL:', targetUrl);
+
+                    // Prevent redirect loops
+                    if (window.location.href === targetUrl) {
+                        showError('Redirect loop detected');
+                        return;
+                    }
+
+                    // Fetch sitemap
+                    updateStatus('Loading sitemap...');
+                    const sitemapUrls = await fetchSitemap();
+
+                    // Check if target exists in sitemap
+                    if (urlExistsInSitemap(targetUrl, sitemapUrls)) {
+                        performRedirect(targetUrl);
+                    } else {
+                        showError('Page not found in sitemap', targetUrl);
+                    }
+
+                } catch (error) {
+                    showError(`Error: ${error.message}`);
+                }
+            }
+
+            // Execute on page load
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', handleRedirect);
+            } else {
+                handleRedirect();
+            }
+
+        })();
+    </script>
+</body>
+</html>
