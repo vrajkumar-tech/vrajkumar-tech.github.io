@@ -1,0 +1,35 @@
+# robots.txt for vrajkumar-tech.github.io
+# Allow all search engines to crawl and index the site
+
+User-agent: *
+Allow: /
+Disallow: /.git/
+Disallow: /.github/
+Disallow: /.windsurf/
+Disallow: /node_modules/
+Disallow: /.env*
+Disallow: /.*
+
+# Specific rules for Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Specific rules for Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Specific rules for other bots
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# Sitemap location
+Sitemap: https://vrajkumar-tech.github.io/sitemap.xml
+
+# Crawl delay for other bots (in seconds)
+Crawl-delay: 1
+Request-rate: 1/1s
