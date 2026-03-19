@@ -7,7 +7,7 @@ This repository now supports dynamic hostname detection, allowing the site to wo
 
 ### 1. Sitemap Update
 **File:** `sitemap.xml`
-- Updated all URLs from `https://vrajkumar-tech.github.io/` to `https://rajkumar.is-a.dev/`
+- Updated all URLs from `https://rajkumar.is-a.dev/` to `https://rajkumar.is-a.dev/`
 - This matches your CNAME configuration
 
 ### 2. Dynamic URL Handler
@@ -79,10 +79,10 @@ For each HTML file, update hardcoded URLs to empty strings:
 
 ### Before:
 ```html
-<link rel="canonical" href="https://vrajkumar-tech.github.io/templates/classic/">
-<meta property="og:url" content="https://vrajkumar-tech.github.io/templates/classic/">
-<meta property="og:image" content="https://vrajkumar-tech.github.io/assets/img/profile.png">
-<meta name="twitter:image" content="https://vrajkumar-tech.github.io/assets/img/profile.png">
+<link rel="canonical" href="https://rajkumar.is-a.dev/templates/classic/">
+<meta property="og:url" content="https://rajkumar.is-a.dev/templates/classic/">
+<meta property="og:image" content="https://rajkumar.is-a.dev/assets/img/profile.png">
+<meta name="twitter:image" content="https://rajkumar.is-a.dev/assets/img/profile.png">
 ```
 
 ### After:

@@ -1,7 +1,7 @@
 # URL Fix Summary
 
 ## Problem
-Google Search Console reported sitemap errors because URLs used `https://vrajkumar-tech.github.io/` but the actual custom domain is `https://rajkumar.is-a.dev/`.
+Google Search Console reported sitemap errors because URLs used `https://rajkumar.is-a.dev/` but the actual custom domain is `https://rajkumar.is-a.dev/`.
 
 ## Solution Implemented
 
