@@ -1,0 +1,1331 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Career Journey — A 3D Experience</title>
+
+<!-- Three.js from CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<style>
+  /* =============================================
+     BASE & RESET
+  ============================================= */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&family=Share+Tech+Mono&display=swap');
+
+  :root {
+    --neon-cyan:   #00f5ff;
+    --neon-gold:   #ffd700;
+    --neon-green:  #39ff14;
+    --neon-pink:   #ff2d78;
+    --dark-bg:     #030810;
+    --panel-bg:    rgba(0, 12, 30, 0.92);
+    --text-main:   #e8f4fd;
+    --text-dim:    #7a9bb5;
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    background: var(--dark-bg);
+    cursor: none;
+  }
+
+  /* Scroll capture div — tall enough to scroll through */
+  #scroll-capture {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    overflow-y: scroll;
+    z-index: 1;
+    pointer-events: all;
+  }
+  #scroll-spacer {
+    /* Height drives total journey length */
+    height: 18000px;
+    pointer-events: none;
+  }
+
+  /* Three.js canvas */
+  #canvas-container {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+  }
+  canvas { display: block; }
+
+  /* =============================================
+     CUSTOM CURSOR
+  ============================================= */
+  #cursor {
+    position: fixed;
+    width: 12px; height: 12px;
+    border: 2px solid var(--neon-cyan);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.15s, height 0.15s, border-color 0.15s;
+    mix-blend-mode: screen;
+  }
+  #cursor-dot {
+    position: fixed;
+    width: 4px; height: 4px;
+    background: var(--neon-cyan);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: screen;
+  }
+
+  /* =============================================
+     LOADING SCREEN
+  ============================================= */
+  #loading {
+    position: fixed;
+    inset: 0;
+    background: var(--dark-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: opacity 0.8s ease;
+  }
+  #loading.fade-out { opacity: 0; pointer-events: none; }
+
+  .load-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1.2rem, 3vw, 2.2rem);
+    font-weight: 900;
+    color: var(--neon-cyan);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+    text-shadow: 0 0 30px var(--neon-cyan), 0 0 60px rgba(0,245,255,0.3);
+  }
+  .load-sub {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    letter-spacing: 0.2em;
+    margin-bottom: 3rem;
+  }
+  .load-bar-wrap {
+    width: 320px;
+    height: 2px;
+    background: rgba(0,245,255,0.1);
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+  }
+  .load-bar {
+    height: 100%;
+    background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+    width: 0%;
+    transition: width 0.1s linear;
+    box-shadow: 0 0 12px var(--neon-cyan);
+  }
+  .load-pct {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--neon-cyan);
+    margin-top: 0.8rem;
+    letter-spacing: 0.1em;
+  }
+  .load-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,245,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,245,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridScroll 8s linear infinite;
+  }
+  @keyframes gridScroll {
+    from { background-position: 0 0; }
+    to { background-position: 0 60px; }
+  }
+
+  /* =============================================
+     HUD OVERLAY
+  ============================================= */
+  #hud {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+    font-family: 'Rajdhani', sans-serif;
+  }
+
+  /* Top bar */
+  .hud-top {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    padding: 1.2rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background: linear-gradient(to bottom, rgba(3,8,16,0.85) 0%, transparent 100%);
+  }
+  .hud-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(0.9rem, 2vw, 1.2rem);
+    font-weight: 700;
+    color: var(--neon-cyan);
+    letter-spacing: 0.2em;
+    text-shadow: 0 0 20px var(--neon-cyan);
+  }
+  .hud-title-text {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    margin-top: 0.2rem;
+  }
+  .hud-coords {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--neon-gold);
+    text-align: right;
+    line-height: 1.7;
+    opacity: 0.8;
+  }
+
+  /* Progress bar — bottom */
+  .hud-progress-wrap {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 1.5rem 2rem;
+    background: linear-gradient(to top, rgba(3,8,16,0.8) 0%, transparent 100%);
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+  }
+  .hud-scroll-hint {
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+  .scroll-icon {
+    width: 16px; height: 24px;
+    border: 1px solid var(--text-dim);
+    border-radius: 8px;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .scroll-icon::after {
+    content: '';
+    position: absolute;
+    width: 3px; height: 5px;
+    background: var(--text-dim);
+    border-radius: 2px;
+    top: 4px; left: 50%;
+    transform: translateX(-50%);
+    animation: scrollDot 2s ease-in-out infinite;
+  }
+  @keyframes scrollDot { 0%,100%{top:4px;opacity:1} 100%{top:12px;opacity:0} }
+
+  .hud-track {
+    flex: 1;
+    height: 2px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 2px;
+    position: relative;
+    overflow: visible;
+  }
+  .hud-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-gold));
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 8px var(--neon-cyan);
+  }
+  .hud-milestones {
+    position: absolute;
+    top: 50%; left: 0; right: 0;
+    transform: translateY(-50%);
+  }
+  .hud-dot {
+    position: absolute;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--dark-bg);
+    border: 1.5px solid var(--neon-gold);
+    top: 50%; transform: translate(-50%, -50%);
+    transition: background 0.3s, box-shadow 0.3s;
+  }
+  .hud-dot.passed {
+    background: var(--neon-gold);
+    box-shadow: 0 0 8px var(--neon-gold);
+  }
+  .hud-year {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--neon-gold);
+    position: absolute;
+    top: 50%; transform: translate(-50%, -220%);
+    white-space: nowrap;
+    opacity: 0.7;
+  }
+  .hud-progress-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
+
+  /* =============================================
+     INFO PANEL (pops when near a building)
+  ============================================= */
+  #info-panel {
+    position: fixed;
+    top: 50%; right: 2.5rem;
+    transform: translateY(-50%) translateX(120%);
+    width: clamp(280px, 28vw, 380px);
+    background: var(--panel-bg);
+    border: 1px solid rgba(0,245,255,0.25);
+    border-right: 3px solid var(--neon-cyan);
+    backdrop-filter: blur(20px);
+    padding: 1.8rem;
+    z-index: 20;
+    pointer-events: none;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+  }
+  #info-panel.visible {
+    transform: translateY(-50%) translateX(0%);
+  }
+  .panel-company {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--neon-cyan);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+    opacity: 0.8;
+  }
+  .panel-role {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(0.85rem, 1.5vw, 1.05rem);
+    font-weight: 700;
+    color: var(--text-main);
+    line-height: 1.3;
+    margin-bottom: 0.3rem;
+  }
+  .panel-duration {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--neon-gold);
+    margin-bottom: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .panel-duration::before {
+    content: '';
+    display: inline-block;
+    width: 20px; height: 1px;
+    background: var(--neon-gold);
+  }
+  .panel-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .panel-bullets li {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    line-height: 1.4;
+    padding-left: 1rem;
+    position: relative;
+  }
+  .panel-bullets li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--neon-cyan);
+    font-size: 0.7rem;
+  }
+  .panel-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 1rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid rgba(0,245,255,0.12);
+  }
+  .skill-tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.58rem;
+    color: var(--neon-cyan);
+    border: 1px solid rgba(0,245,255,0.3);
+    padding: 0.2rem 0.5rem;
+    border-radius: 2px;
+    background: rgba(0,245,255,0.05);
+    letter-spacing: 0.05em;
+  }
+
+  /* =============================================
+     WELCOME SPLASH (before scroll starts)
+  ============================================= */
+  #welcome {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 8;
+    transition: opacity 1s ease;
+  }
+  #welcome.hidden { opacity: 0; }
+  .welcome-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2rem, 6vw, 5rem);
+    font-weight: 900;
+    color: transparent;
+    background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-gold) 60%, var(--neon-cyan) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    letter-spacing: 0.05em;
+    text-align: center;
+    text-shadow: none;
+    animation: shimmer 3s ease-in-out infinite;
+    background-size: 200%;
+  }
+  @keyframes shimmer {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+  .welcome-tagline {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(0.9rem, 2vw, 1.3rem);
+    color: var(--text-dim);
+    letter-spacing: 0.3em;
+    margin-top: 0.5rem;
+    text-transform: uppercase;
+  }
+  .welcome-cta {
+    margin-top: 3rem;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--neon-cyan);
+    letter-spacing: 0.2em;
+    opacity: 0.6;
+    animation: pulse 2s ease-in-out infinite;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .welcome-cta::before, .welcome-cta::after {
+    content: '—';
+    opacity: 0.4;
+  }
+
+  /* =============================================
+     SCANLINES overlay
+  ============================================= */
+  #scanlines {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.04) 2px,
+      rgba(0,0,0,0.04) 4px
+    );
+  }
+
+  /* Vignette */
+  #vignette {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 6;
+    background: radial-gradient(ellipse at center,
+      transparent 50%,
+      rgba(3,8,16,0.6) 100%
+    );
+  }
+</style>
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div id="loading">
+  <div class="load-grid"></div>
+  <div class="load-title">Initializing Career Matrix</div>
+  <div class="load-sub">Loading Professional Journey · 10+ Years</div>
+  <div class="load-bar-wrap">
+    <div class="load-bar" id="load-bar"></div>
+  </div>
+  <div class="load-pct" id="load-pct">0%</div>
+</div>
+
+<!-- Canvas -->
+<div id="canvas-container"></div>
+
+<!-- Scroll Capture -->
+<div id="scroll-capture">
+  <div id="scroll-spacer"></div>
+</div>
+
+<!-- Overlays -->
+<div id="scanlines"></div>
+<div id="vignette"></div>
+
+<!-- Welcome splash -->
+<div id="welcome">
+  <div class="welcome-name">Director of Engineering</div>
+  <div class="welcome-tagline">10+ Years · 50+ Engineers · ∞ Impact</div>
+  <div class="welcome-cta">SCROLL TO BEGIN THE JOURNEY</div>
+</div>
+
+<!-- HUD -->
+<div id="hud">
+  <div class="hud-top">
+    <div>
+      <div class="hud-name">APPLIED DATA FINANCE</div>
+      <div class="hud-title-text">Senior Engineering Leader · Chennai, IN</div>
+    </div>
+    <div class="hud-coords" id="hud-coords">
+      YEAR: 2015<br>
+      PROGRESS: 0%<br>
+      PHASE: INITIATING
+    </div>
+  </div>
+  <div class="hud-progress-wrap">
+    <div class="hud-scroll-hint">
+      <div class="scroll-icon"></div>
+      SCROLL TO NAVIGATE
+    </div>
+    <div class="hud-track">
+      <div class="hud-fill" id="hud-fill"></div>
+      <div class="hud-milestones" id="hud-milestones"></div>
+    </div>
+    <div class="hud-progress-label" id="hud-prog-label">0 / 8</div>
+  </div>
+</div>
+
+<!-- Info Panel -->
+<div id="info-panel">
+  <div class="panel-company" id="panel-company"></div>
+  <div class="panel-role" id="panel-role"></div>
+  <div class="panel-duration" id="panel-duration"></div>
+  <ul class="panel-bullets" id="panel-bullets"></ul>
+  <div class="panel-skills" id="panel-skills"></div>
+</div>
+
+<!-- Custom cursor -->
+<div id="cursor"></div>
+<div id="cursor-dot"></div>
+
+<script>
+// =============================================
+// CAREER DATA
+// =============================================
+const CAREER = [
+  {
+    company: "Amada Soft India",
+    role: "CAD Engineer",
+    duration: "Jun 2010 — Oct 2011 · 1yr 5mo",
+    year: "2010",
+    color: 0x4a90d9,
+    accentColor: "#4a90d9",
+    height: 2.5,
+    bullets: [
+      "Built Python & REST API services for CAD automation",
+      "Created G-code review and generation tools",
+      "Delivered OCR-based digital document transformation",
+      "Developed automation workflows for operational efficiency"
+    ],
+    skills: ["Python", "REST APIs", "MySQL", "Automation", "OCR"]
+  },
+  {
+    company: "Global Analytics",
+    role: "Sr. DevOps Engineer",
+    duration: "Mar 2012 — Oct 2015 · 3yrs 8mo",
+    year: "2012",
+    color: 0x7b68ee,
+    accentColor: "#7b68ee",
+    height: 3.5,
+    bullets: [
+      "Automated LMS batch jobs and financial reporting pipelines",
+      "Built Jenkins pipelines and automated payout workflows",
+      "Tuned MySQL for high-volume data workloads",
+      "Developed monitoring, alerting, and post-prod automation"
+    ],
+    skills: ["DevOps", "Jenkins", "MySQL", "Python", "Bash", "RPA", "Monitoring"]
+  },
+  {
+    company: "Applied Data Finance",
+    role: "Senior Software Engineer",
+    duration: "Oct 2015 — Mar 2016 · 6mo",
+    year: "2015",
+    color: 0x00c896,
+    accentColor: "#00c896",
+    height: 3.0,
+    bullets: [
+      "Built high-performance APIs and backend modules",
+      "Drove sprint planning with US product teams",
+      "Ensured quality delivery across critical lending systems"
+    ],
+    skills: ["Python", "Django", "REST APIs", "MySQL", "RPA"]
+  },
+  {
+    company: "Applied Data Finance",
+    role: "Senior Tech Lead",
+    duration: "Apr 2016 — Mar 2018 · 2yrs",
+    year: "2016",
+    color: 0x00d4ff,
+    accentColor: "#00d4ff",
+    height: 4.2,
+    bullets: [
+      "Built high-performance backend services for lending systems",
+      "Collaborated with US teams on business-aligned features",
+      "Ensured quality through testing & release discipline",
+      "Mentored junior engineers; enforced code standards"
+    ],
+    skills: ["Backend", "API Architecture", "Python", "Agile", "Mentoring"]
+  },
+  {
+    company: "Applied Data Finance",
+    role: "Asst. Engineering Manager",
+    duration: "Apr 2018 — Mar 2020 · 2yrs",
+    year: "2018",
+    color: 0xffd700,
+    accentColor: "#ffd700",
+    height: 5.0,
+    bullets: [
+      "Strengthened tech-ops automation with Jenkins, Docker, K8s",
+      "Improved monitoring and operational efficiency",
+      "Enabled faster recovery and deployment cycles",
+      "Led team through critical production stabilization"
+    ],
+    skills: ["TechOps", "Docker", "Kubernetes", "Jenkins", "Monitoring", "Reliability"]
+  },
+  {
+    company: "Applied Data Finance",
+    role: "Engineering Manager",
+    duration: "Apr 2020 — Mar 2021 · 1yr",
+    year: "2020",
+    color: 0xff8c42,
+    accentColor: "#ff8c42",
+    height: 5.8,
+    bullets: [
+      "Delivered product roadmap aligned to sprint goals",
+      "Led Tools & Automation team (RPA + platform services)",
+      "Code quality governance via SonarQube",
+      "Architecture reviews and refactoring for stability"
+    ],
+    skills: ["Roadmap", "Sprint Planning", "Architecture", "SonarQube", "CI/CD"]
+  },
+  {
+    company: "Applied Data Finance",
+    role: "Senior Manager, Product Eng",
+    duration: "Apr 2021 — Mar 2023 · 2yrs",
+    year: "2021",
+    color: 0xff2d78,
+    accentColor: "#ff2d78",
+    height: 7.0,
+    bullets: [
+      "Led 70+ engineers across product and platform teams",
+      "Improved KPIs: cycle time, deployment frequency, defect leakage",
+      "Standardized architecture patterns for scalability",
+      "Delivered high-scale lending systems (Python/Django, Java)",
+      "Built CI/CD pipelines with Jenkins, Docker, Kubernetes"
+    ],
+    skills: ["70+ Engineers", "Platform Eng", "CI/CD", "K8s", "Agile", "Cloud"]
+  },
+  {
+    company: "Applied Data Finance",
+    role: "Director of Product Engineering",
+    duration: "Apr 2023 — Present · 3yrs",
+    year: "2023",
+    color: 0x00f5ff,
+    accentColor: "#00f5ff",
+    height: 9.0,
+    bullets: [
+      "Own engineering strategy across underwriting, servicing & platform",
+      "Lead org of 50+ engineers across product, platform, and QA",
+      "Improved release reliability via SRE & observability",
+      "Drove architecture modernization: microservices, AWS, Kubernetes",
+      "Built AI-first engineering culture across full SDLC",
+      "Led risk automation, pricing systems & model integrations"
+    ],
+    skills: ["Director", "50+ Engineers", "AWS", "K8s", "AI/ML", "SRE", "Strategy"]
+  }
+];
+
+// =============================================
+// THREE.JS SETUP
+// =============================================
+const container = document.getElementById('canvas-container');
+const W = () => window.innerWidth;
+const H = () => window.innerHeight;
+
+// Renderer
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+renderer.setSize(W(), H());
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 0.9;
+container.appendChild(renderer.domElement);
+
+// Scene
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x030810, 0.022);
+scene.background = new THREE.Color(0x030810);
+
+// Camera
+const camera = new THREE.PerspectiveCamera(60, W() / H(), 0.1, 300);
+camera.position.set(0, 2.2, 4);
+camera.lookAt(0, 1.8, -5);
+
+// =============================================
+// LIGHTING
+// =============================================
+const ambientLight = new THREE.AmbientLight(0x0a1628, 1.2);
+scene.add(ambientLight);
+
+const sunLight = new THREE.DirectionalLight(0x224488, 0.8);
+sunLight.position.set(10, 25, 10);
+sunLight.castShadow = true;
+sunLight.shadow.mapSize.width = 2048;
+sunLight.shadow.mapSize.height = 2048;
+sunLight.shadow.camera.far = 300;
+sunLight.shadow.camera.left = -80;
+sunLight.shadow.camera.right = 80;
+sunLight.shadow.camera.top = 80;
+sunLight.shadow.camera.bottom = -80;
+scene.add(sunLight);
+
+// Cyan fill light
+const fillLight = new THREE.PointLight(0x00f5ff, 0.6, 40);
+fillLight.position.set(-5, 8, 0);
+scene.add(fillLight);
+
+// Moving headlight
+const headLight = new THREE.SpotLight(0xffffff, 1.5, 30, Math.PI / 8, 0.4, 1.5);
+headLight.position.set(0, 4, 4);
+headLight.castShadow = false;
+scene.add(headLight);
+const headLightTarget = new THREE.Object3D();
+scene.add(headLightTarget);
+headLight.target = headLightTarget;
+
+// =============================================
+// ROAD
+// =============================================
+function buildRoad() {
+  const group = new THREE.Group();
+  const totalLength = 280;
+  const roadWidth = 7;
+
+  // Road surface
+  const roadGeo = new THREE.PlaneGeometry(roadWidth, totalLength, 1, 100);
+  const roadMat = new THREE.MeshLambertMaterial({ color: 0x0d1420, side: THREE.FrontSide });
+  const road = new THREE.Mesh(roadGeo, roadMat);
+  road.rotation.x = -Math.PI / 2;
+  road.position.z = -totalLength / 2 + 4;
+  road.receiveShadow = true;
+  group.add(road);
+
+  // Road edges (cyan glow lines)
+  for (let side = -1; side <= 1; side += 2) {
+    const edgeGeo = new THREE.PlaneGeometry(0.12, totalLength);
+    const edgeMat = new THREE.MeshBasicMaterial({ color: 0x00f5ff });
+    const edge = new THREE.Mesh(edgeGeo, edgeMat);
+    edge.rotation.x = -Math.PI / 2;
+    edge.position.set(side * (roadWidth / 2), 0.01, -totalLength / 2 + 4);
+    group.add(edge);
+  }
+
+  // Center dashed line
+  const dashCount = 70;
+  const dashLen = 1.8;
+  const dashGap = 2;
+  for (let i = 0; i < dashCount; i++) {
+    const dashGeo = new THREE.PlaneGeometry(0.15, dashLen);
+    const dashMat = new THREE.MeshBasicMaterial({ color: 0xffd70044 });
+    const dash = new THREE.Mesh(dashGeo, dashMat);
+    dash.rotation.x = -Math.PI / 2;
+    dash.position.set(0, 0.01, -(i * (dashLen + dashGap)) - 2);
+    group.add(dash);
+  }
+
+  // Ground plane (wider)
+  const groundGeo = new THREE.PlaneGeometry(300, totalLength + 40);
+  const groundMat = new THREE.MeshLambertMaterial({ color: 0x080d18 });
+  const ground = new THREE.Mesh(groundGeo, groundMat);
+  ground.rotation.x = -Math.PI / 2;
+  ground.position.set(0, -0.01, -totalLength / 2);
+  ground.receiveShadow = true;
+  group.add(ground);
+
+  return group;
+}
+scene.add(buildRoad());
+
+// =============================================
+// STAR FIELD / SKY
+// =============================================
+function buildStars() {
+  const geo = new THREE.BufferGeometry();
+  const count = 2000;
+  const positions = new Float32Array(count * 3);
+  for (let i = 0; i < count; i++) {
+    positions[i * 3]     = (Math.random() - 0.5) * 400;
+    positions[i * 3 + 1] = Math.random() * 80 + 5;
+    positions[i * 3 + 2] = (Math.random() - 0.5) * 400;
+  }
+  geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const mat = new THREE.PointsMaterial({ color: 0xffffff, size: 0.15, sizeAttenuation: true });
+  return new THREE.Points(geo, mat);
+}
+scene.add(buildStars());
+
+// =============================================
+// BUILDINGS
+// =============================================
+// Spacing along Z axis
+const BUILDING_START_Z = -10;
+const BUILDING_SPACING = 28;
+
+function makeGlowTexture(text, color, size = 256) {
+  const canvas = document.createElement('canvas');
+  canvas.width = size; canvas.height = size / 2;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // Background
+  ctx.fillStyle = 'rgba(0,12,30,0.95)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  // Border
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 3;
+  ctx.strokeRect(3, 3, canvas.width - 6, canvas.height - 6);
+  // Glow line
+  ctx.fillStyle = color;
+  ctx.fillRect(3, 3, canvas.width - 6, 2);
+  // Text
+  ctx.fillStyle = color;
+  ctx.shadowColor = color;
+  ctx.shadowBlur = 15;
+  ctx.font = `bold ${size / 10}px 'Orbitron', monospace`;
+  ctx.textAlign = 'center';
+  ctx.fillText(text, canvas.width / 2, canvas.height / 2 + 4);
+  return new THREE.CanvasTexture(canvas);
+}
+
+function makeBuildingTexture(color) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 128; canvas.height = 256;
+  const ctx = canvas.getContext('2d');
+  // Base color (darker)
+  const hex = '#' + color.toString(16).padStart(6, '0');
+  ctx.fillStyle = hex + '18';
+  ctx.fillRect(0, 0, 128, 256);
+
+  // Grid of windows
+  const wCols = 5, wRows = 14;
+  const wW = 14, wH = 10, wPadX = 10, wPadY = 10;
+  for (let r = 0; r < wRows; r++) {
+    for (let c = 0; c < wCols; c++) {
+      const lit = Math.random() > 0.35;
+      ctx.fillStyle = lit ? hex + 'cc' : hex + '22';
+      ctx.shadowColor = lit ? hex : 'transparent';
+      ctx.shadowBlur = lit ? 6 : 0;
+      ctx.fillRect(wPadX + c * (wW + 6), wPadY + r * (wH + 8), wW, wH);
+    }
+  }
+  return new THREE.CanvasTexture(canvas);
+}
+
+const buildings = [];
+
+CAREER.forEach((job, i) => {
+  const z = BUILDING_START_Z - i * BUILDING_SPACING;
+  const side = i % 2 === 0 ? -1 : 1; // alternate sides
+  const x = side * (6 + Math.random() * 1.5);
+
+  const h = job.height;
+  const w = 3.5 + Math.random() * 1.5;
+  const d = 3.0 + Math.random() * 1.0;
+
+  const group = new THREE.Group();
+  group.position.set(x, 0, z);
+
+  // Main tower
+  const bGeo = new THREE.BoxGeometry(w, h, d);
+  const bTex = makeBuildingTexture(job.color);
+  const bMat = new THREE.MeshLambertMaterial({
+    color: job.color,
+    map: bTex,
+    emissive: new THREE.Color(job.color),
+    emissiveIntensity: 0.08,
+  });
+  const tower = new THREE.Mesh(bGeo, bMat);
+  tower.position.y = h / 2;
+  tower.castShadow = true;
+  tower.receiveShadow = true;
+  group.add(tower);
+
+  // Rooftop accent
+  const roofGeo = new THREE.BoxGeometry(w * 0.6, 0.18, d * 0.6);
+  const roofMat = new THREE.MeshBasicMaterial({ color: job.color });
+  const roof = new THREE.Mesh(roofGeo, roofMat);
+  roof.position.y = h + 0.09;
+  group.add(roof);
+
+  // Antenna
+  const antGeo = new THREE.CylinderGeometry(0.04, 0.04, 1.8, 6);
+  const antMat = new THREE.MeshBasicMaterial({ color: job.color });
+  const ant = new THREE.Mesh(antGeo, antMat);
+  ant.position.y = h + 0.18 + 0.9;
+  group.add(ant);
+
+  // Antenna top blinker
+  const blinkGeo = new THREE.SphereGeometry(0.12, 8, 8);
+  const blinkMat = new THREE.MeshBasicMaterial({ color: job.color });
+  const blink = new THREE.Mesh(blinkGeo, blinkMat);
+  blink.position.y = h + 0.18 + 1.8 + 0.12;
+  group.add(blink);
+
+  // Company name sign (floating panel near road side)
+  const signCanvas = document.createElement('canvas');
+  signCanvas.width = 512; signCanvas.height = 128;
+  const sCtx = signCanvas.getContext('2d');
+  sCtx.fillStyle = 'rgba(0,8,20,0.9)';
+  sCtx.fillRect(0,0,512,128);
+  sCtx.strokeStyle = job.accentColor;
+  sCtx.lineWidth = 3;
+  sCtx.strokeRect(3,3,506,122);
+  sCtx.fillStyle = job.accentColor;
+  sCtx.shadowColor = job.accentColor;
+  sCtx.shadowBlur = 20;
+  sCtx.font = 'bold 28px Orbitron, monospace';
+  sCtx.textAlign = 'center';
+  sCtx.fillText(job.company.toUpperCase(), 256, 42);
+  sCtx.font = '18px Rajdhani, sans-serif';
+  sCtx.fillStyle = '#aaccdd';
+  sCtx.shadowBlur = 0;
+  sCtx.fillText(job.role, 256, 76);
+  sCtx.font = '14px monospace';
+  sCtx.fillStyle = job.accentColor + 'aa';
+  sCtx.fillText(job.duration, 256, 104);
+
+  const signTex = new THREE.CanvasTexture(signCanvas);
+  const signGeo = new THREE.PlaneGeometry(3.5, 0.88);
+  const signMat = new THREE.MeshBasicMaterial({ map: signTex, side: THREE.DoubleSide, transparent: true });
+  const sign = new THREE.Mesh(signGeo, signMat);
+
+  // Position sign facing road
+  const signX = -side * (w / 2 + 0.02);
+  sign.position.set(signX, h * 0.55, 0);
+  sign.rotation.y = side > 0 ? -Math.PI / 2 : Math.PI / 2;
+  group.add(sign);
+
+  // Point light for glow
+  const pLight = new THREE.PointLight(job.color, 0.8, 12);
+  pLight.position.set(0, h * 0.7, 0);
+  group.add(pLight);
+
+  // Road marker (pillar at road side)
+  const markerGeo = new THREE.CylinderGeometry(0.1, 0.1, 0.9, 8);
+  const markerMat = new THREE.MeshBasicMaterial({ color: job.color });
+  const marker = new THREE.Mesh(markerGeo, markerMat);
+  marker.position.set(-side * 3.2, 0.45, 0.5);
+  group.add(marker);
+
+  // Marker cap
+  const capGeo = new THREE.SphereGeometry(0.16, 8, 8);
+  const capMat = new THREE.MeshBasicMaterial({ color: job.color });
+  const cap = new THREE.Mesh(capGeo, capMat);
+  cap.position.set(-side * 3.2, 1.06, 0.5);
+  group.add(cap);
+
+  scene.add(group);
+
+  buildings.push({
+    group,
+    z,
+    job,
+    tower,
+    blink,
+    pLight,
+    side,
+    originalY: 0,
+    scaleTarget: 1,
+    currentScale: 1,
+    active: false,
+    blinkPhase: Math.random() * Math.PI * 2
+  });
+});
+
+// =============================================
+// GRID FLOOR HELPERS (city grid effect)
+// =============================================
+const gridHelper = new THREE.GridHelper(300, 60, 0x0a1f33, 0x050d1a);
+gridHelper.position.y = 0.001;
+scene.add(gridHelper);
+
+// =============================================
+// DISTANT CITY SKYLINE
+// =============================================
+function buildSkyline() {
+  const group = new THREE.Group();
+  const colors = [0x1a3a5c, 0x0d2233, 0x152840, 0x1e3850];
+  for (let i = -8; i <= 8; i++) {
+    const h = 8 + Math.random() * 25;
+    const w = 3 + Math.random() * 6;
+    const geo = new THREE.BoxGeometry(w, h, 2);
+    const mat = new THREE.MeshLambertMaterial({ color: colors[Math.floor(Math.random() * colors.length)] });
+    const m = new THREE.Mesh(geo, mat);
+    m.position.set(i * 9 + (Math.random() - 0.5) * 4, h / 2, -230 + Math.random() * 10);
+    group.add(m);
+  }
+  return group;
+}
+scene.add(buildSkyline());
+
+// =============================================
+// SCROLL STATE & CAMERA CONTROL
+// =============================================
+const scrollCapture = document.getElementById('scroll-capture');
+let scrollProgress = 0; // 0..1
+let targetCamZ = 4;
+let currentCamZ = 4;
+const JOURNEY_LENGTH = 200; // total Z travel
+
+// Auto-scroll variables
+let autoScrollEnabled = false;
+let lastUserScrollTime = Date.now();
+let autoScrollTimer = null;
+const AUTO_SCROLL_DELAY = 1000; // 1 second
+const AUTO_SCROLL_SPEED = 0.3; // pixels per frame
+
+// Reset auto-scroll timer on user scroll
+function resetAutoScrollTimer() {
+  lastUserScrollTime = Date.now();
+  autoScrollEnabled = false;
+  
+  if (autoScrollTimer) {
+    clearTimeout(autoScrollTimer);
+  }
+  
+  autoScrollTimer = setTimeout(() => {
+    autoScrollEnabled = true;
+  }, AUTO_SCROLL_DELAY);
+}
+
+scrollCapture.addEventListener('scroll', () => {
+  const el = scrollCapture;
+  const maxScroll = el.scrollHeight - el.clientHeight;
+  scrollProgress = el.scrollTop / maxScroll;
+  
+  // Reset timer on manual scroll
+  resetAutoScrollTimer();
+});
+
+// Detect user interaction to disable auto-scroll
+scrollCapture.addEventListener('wheel', resetAutoScrollTimer, { passive: true });
+scrollCapture.addEventListener('touchstart', resetAutoScrollTimer, { passive: true });
+scrollCapture.addEventListener('touchmove', resetAutoScrollTimer, { passive: true });
+scrollCapture.addEventListener('mousedown', resetAutoScrollTimer);
+
+// Start the initial timer
+resetAutoScrollTimer();
+
+// =============================================
+// INFO PANEL LOGIC
+// =============================================
+const panel = document.getElementById('info-panel');
+let activeBuildingIdx = -1;
+
+function showPanel(job) {
+  document.getElementById('panel-company').textContent = job.company;
+  document.getElementById('panel-role').textContent = job.role;
+  document.getElementById('panel-duration').textContent = job.duration;
+
+  const ul = document.getElementById('panel-bullets');
+  ul.innerHTML = '';
+  job.bullets.forEach(b => {
+    const li = document.createElement('li');
+    li.textContent = b;
+    ul.appendChild(li);
+  });
+
+  const sk = document.getElementById('panel-skills');
+  sk.innerHTML = '';
+  job.skills.forEach(s => {
+    const span = document.createElement('span');
+    span.className = 'skill-tag';
+    span.textContent = s;
+    sk.appendChild(span);
+  });
+
+  panel.classList.add('visible');
+}
+
+function hidePanel() {
+  panel.classList.remove('visible');
+}
+
+// =============================================
+// HUD MILESTONE DOTS
+// =============================================
+const milestonesEl = document.getElementById('hud-milestones');
+CAREER.forEach((job, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'hud-dot';
+  dot.id = `hud-dot-${i}`;
+  dot.style.left = `${(i / (CAREER.length - 1)) * 100}%`;
+  const yr = document.createElement('div');
+  yr.className = 'hud-year';
+  yr.textContent = job.year;
+  dot.appendChild(yr);
+  milestonesEl.appendChild(dot);
+});
+
+// =============================================
+// MAIN ANIMATION LOOP
+// =============================================
+const clock = new THREE.Clock();
+let time = 0;
+
+function getPhaseLabel(progress) {
+  if (progress < 0.05) return "INITIATING";
+  if (progress < 0.2) return "EARLY CAREER";
+  if (progress < 0.5) return "GROWTH PHASE";
+  if (progress < 0.75) return "LEADERSHIP";
+  if (progress < 0.9) return "SENIOR DIRECTOR";
+  return "APEX";
+}
+
+function getCurrentYear(progress) {
+  const idx = Math.floor(progress * (CAREER.length - 1));
+  const job = CAREER[Math.min(idx, CAREER.length - 1)];
+  return job.year;
+}
+
+function animate() {
+  requestAnimationFrame(animate);
+  const delta = clock.getDelta();
+  time += delta;
+
+  // --- Auto-scroll logic ---
+  if (autoScrollEnabled) {
+    const maxScroll = scrollCapture.scrollHeight - scrollCapture.clientHeight;
+    if (scrollCapture.scrollTop < maxScroll) {
+      scrollCapture.scrollTop += AUTO_SCROLL_SPEED;
+    }
+  }
+
+  // --- Camera movement ---
+  targetCamZ = 4 - scrollProgress * JOURNEY_LENGTH;
+  currentCamZ += (targetCamZ - currentCamZ) * 0.06; // smooth lerp
+  camera.position.z = currentCamZ;
+
+  // Slight camera bob
+  camera.position.y = 2.2 + Math.sin(time * 0.5) * 0.06;
+  // Subtle horizontal sway
+  camera.position.x = Math.sin(time * 0.3) * 0.15;
+
+  // Keep looking slightly ahead and up
+  camera.lookAt(
+    camera.position.x * 0.3,
+    1.6 + Math.sin(time * 0.4) * 0.04,
+    currentCamZ - 12
+  );
+
+  // Headlight follows camera
+  headLight.position.set(camera.position.x, camera.position.y + 1.5, camera.position.z);
+  headLightTarget.position.set(0, 1.5, currentCamZ - 20);
+
+  // --- Building animations ---
+  let closestBuildingIdx = -1;
+  let closestDist = Infinity;
+
+  buildings.forEach((b, i) => {
+    const distZ = Math.abs(b.z - currentCamZ);
+
+    // Scale building up as it approaches
+    const approachFactor = Math.max(0, 1 - distZ / 25);
+    b.scaleTarget = 1 + approachFactor * 0.06;
+    b.currentScale += (b.scaleTarget - b.currentScale) * 0.05;
+    b.group.scale.setScalar(b.currentScale);
+
+    // Slight float
+    b.group.position.y = Math.sin(time * 0.7 + i * 1.3) * 0.04;
+
+    // Antenna blink
+    b.blinkPhase += delta * (1.5 + i * 0.3);
+    const blinkOn = Math.sin(b.blinkPhase) > 0.6;
+    b.blink.material.color.setHex(blinkOn ? b.job.color : 0x111111);
+
+    // Point light pulse
+    b.pLight.intensity = 0.5 + Math.sin(time * 1.2 + i) * 0.3;
+
+    // Find closest building
+    if (distZ < closestDist && distZ < 18) {
+      closestDist = distZ;
+      closestBuildingIdx = i;
+    }
+  });
+
+  // Show/hide panel
+  if (closestBuildingIdx !== activeBuildingIdx) {
+    activeBuildingIdx = closestBuildingIdx;
+    if (activeBuildingIdx >= 0) {
+      showPanel(buildings[activeBuildingIdx].job);
+    } else {
+      hidePanel();
+    }
+  }
+
+  // --- HUD Update ---
+  const hfill = document.getElementById('hud-fill');
+  const pct = Math.round(scrollProgress * 100);
+  hfill.style.width = pct + '%';
+
+  const coordEl = document.getElementById('hud-coords');
+  coordEl.innerHTML = `YEAR: ${getCurrentYear(scrollProgress)}<br>PROGRESS: ${pct}%<br>PHASE: ${getPhaseLabel(scrollProgress)}`;
+
+  const progLabel = document.getElementById('hud-prog-label');
+  const passedCount = buildings.filter(b => b.z > currentCamZ + 2).length;
+  progLabel.textContent = `${CAREER.length - passedCount} / ${CAREER.length}`;
+
+  // Milestone dots
+  buildings.forEach((b, i) => {
+    const dot = document.getElementById(`hud-dot-${i}`);
+    if (dot) {
+      if (b.z > currentCamZ + 2) {
+        dot.classList.add('passed');
+        dot.style.borderColor = b.job.accentColor;
+        dot.style.background = b.job.accentColor;
+        dot.style.boxShadow = `0 0 8px ${b.job.accentColor}`;
+      } else {
+        dot.classList.remove('passed');
+        dot.style.borderColor = b.job.accentColor;
+        dot.style.background = '';
+        dot.style.boxShadow = '';
+      }
+    }
+  });
+
+  // --- Welcome splash ---
+  const welcome = document.getElementById('welcome');
+  if (scrollProgress > 0.03 && !welcome.classList.contains('hidden')) {
+    welcome.classList.add('hidden');
+  } else if (scrollProgress <= 0.005) {
+    welcome.classList.remove('hidden');
+  }
+
+  // Subtle fill light drift
+  fillLight.position.x = Math.sin(time * 0.2) * 8;
+  fillLight.position.z = currentCamZ + Math.cos(time * 0.3) * 5;
+
+  renderer.render(scene, camera);
+}
+
+// =============================================
+// RESIZE HANDLER
+// =============================================
+window.addEventListener('resize', () => {
+  camera.aspect = W() / H();
+  camera.updateProjectionMatrix();
+  renderer.setSize(W(), H());
+});
+
+// =============================================
+// CURSOR
+// =============================================
+const cursorEl = document.getElementById('cursor');
+const cursorDot = document.getElementById('cursor-dot');
+let cursorX = 0, cursorY = 0;
+let dotX = 0, dotY = 0;
+
+window.addEventListener('mousemove', e => {
+  cursorX = e.clientX; cursorY = e.clientY;
+  cursorDot.style.left = cursorX + 'px';
+  cursorDot.style.top = cursorY + 'px';
+});
+
+function animateCursor() {
+  dotX += (cursorX - dotX) * 0.12;
+  dotY += (cursorY - dotY) * 0.12;
+  cursorEl.style.left = dotX + 'px';
+  cursorEl.style.top = dotY + 'px';
+  requestAnimationFrame(animateCursor);
+}
+animateCursor();
+
+// =============================================
+// LOADING SIMULATION
+// =============================================
+const loadBar = document.getElementById('load-bar');
+const loadPct = document.getElementById('load-pct');
+let loadVal = 0;
+
+function simulateLoad() {
+  const targetLoad = 100;
+  const step = () => {
+    loadVal += Math.random() * 8 + 2;
+    if (loadVal >= targetLoad) loadVal = targetLoad;
+    loadBar.style.width = loadVal + '%';
+    loadPct.textContent = Math.floor(loadVal) + '%';
+    if (loadVal < targetLoad) {
+      setTimeout(step, 60 + Math.random() * 80);
+    } else {
+      // Fade out loader, start scene
+      setTimeout(() => {
+        document.getElementById('loading').classList.add('fade-out');
+        setTimeout(() => {
+          document.getElementById('loading').style.display = 'none';
+          animate();
+        }, 900);
+      }, 300);
+    }
+  };
+  setTimeout(step, 200);
+}
+
+simulateLoad();
+
+// =============================================
+// KEYBOARD FALLBACK (arrow keys)
+// =============================================
+window.addEventListener('keydown', e => {
+  const el = scrollCapture;
+  const step = 300;
+  if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+    el.scrollTop += step;
+  } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+    el.scrollTop -= step;
+  }
+});
+</script>
+</body>
+</html>
