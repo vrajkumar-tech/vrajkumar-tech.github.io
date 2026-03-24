@@ -18,7 +18,7 @@ jobs:
       id: set-matrix
       run: |
         HOSTNAMES='${{ vars.HOSTNAMES }}'
-        echo "matrix={\"hostname\":$HOSTNAMES}" >> $GITHUB_OUTPUT
+        echo "matrix=$HOSTNAMES" >> $GITHUB_OUTPUT
 
   impression-tracking:
     needs: generate-matrix
@@ -26,7 +26,8 @@ jobs:
     environment: github-pages
     
     strategy:
-      matrix: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+      matrix:
+        hostname: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
       fail-fast: false
     
     steps:
