@@ -10,10 +10,11 @@ on:
 jobs:
   impression-tracking:
     runs-on: ubuntu-latest
+    environment: github-pages
     
     strategy:
       matrix:
-        hostname: ${{ secrets.HOSTNAMES }}
+        hostname: ${{ vars.HOSTNAMES }}
       fail-fast: false
     
     steps:
